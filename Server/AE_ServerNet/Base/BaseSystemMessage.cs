@@ -1,4 +1,5 @@
-﻿namespace AE_NetMessage
+﻿
+namespace AE_NetMessage
 {
     public abstract class BaseSystemMessage : BaseMessage
     {

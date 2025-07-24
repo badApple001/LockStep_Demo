@@ -1,5 +1,4 @@
-﻿using System;
-namespace AE_NetMessage
+﻿namespace AE_NetMessage
 {
     public class ByteArray
     {
