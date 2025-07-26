@@ -67,7 +67,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
         /// </summary>
         public byte Count;
 
-#if ALLOWUNSAFE
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
         /// <summary>
         /// Removes an item at the given index.
         /// </summary>
@@ -1435,7 +1435,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
         /// <param name="transformA">Transform to apply to shape A.</param>
         /// <param name="transformB">Transform to apply to shape B.</param>
         /// <returns>Whether or not the boxes collide.</returns>
-#if ALLOWUNSAFE
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
         public static bool AreBoxesColliding(BoxShape a, BoxShape b, ref RigidTransform transformA, ref RigidTransform transformB, out Fix64 distance, out Vector3 axis, out BoxContactDataCache contactData)
 #else
         public static bool AreBoxesColliding(BoxShape a, BoxShape b, ref RigidTransform transformA, ref RigidTransform transformB, out Fix64 distance, out Vector3 axis, out TinyStructList<BoxContactData> contactData)
@@ -1449,7 +1449,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
             Fix64 bY = b.HalfHeight;
             Fix64 bZ = b.HalfLength;
 
-#if ALLOWUNSAFE
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
             contactData = new BoxContactDataCache();
 #else
             contactData = new TinyStructList<BoxContactData>();
@@ -2306,7 +2306,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
             return true;
         }
 
-#if ALLOWUNSAFE
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
         internal static void GetEdgeEdgeContact(BoxShape a, BoxShape b, ref Vector3 positionA, ref Matrix3x3 orientationA, ref Vector3 positionB, ref Matrix3x3 orientationB, Fix64 depth, ref Vector3 mtd, out BoxContactDataCache contactData)
 #else
         internal static void GetEdgeEdgeContact(BoxShape a, BoxShape b, ref Vector3 positionA, ref Matrix3x3 orientationA, ref Vector3 positionB, ref Matrix3x3 orientationB, Fix64 depth, ref Vector3 mtd, out TinyStructList<BoxContactData> contactData)
@@ -2354,7 +2354,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
             Matrix3x3.TransformTranspose(ref mtd, ref orientationB, out mtdB);
 
 
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 edgeAStart1 = new Vector3(), edgeAEnd1 = new Vector3(), edgeAStart2 = new Vector3(), edgeAEnd2 = new Vector3();
             Vector3 edgeBStart1 = new Vector3(), edgeBEnd1 = new Vector3(), edgeBStart2 = new Vector3(), edgeBEnd2 = new Vector3();
 #else
@@ -2523,7 +2523,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
             Vector3 onA, onB;
             Vector3 offset;
             Fix64 dot;
-#if ALLOWUNSAFE
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
             var tempContactData = new BoxContactDataCache();
             unsafe
             {
@@ -2544,7 +2544,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
                     data.Position = onA;
                     data.Depth = dot;
                     data.Id = GetContactId(edgeAStart1Id, edgeAEnd1Id, edgeBStart1Id, edgeBEnd1Id);
-#if ALLOWUNSAFE
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
                         contactDataPointer[tempContactData.Count] = data;
                         tempContactData.Count++;
 #else
@@ -2563,8 +2563,8 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
                     data.Position = onA;
                     data.Depth = dot;
                     data.Id = GetContactId(edgeAStart1Id, edgeAEnd1Id, edgeBStart2Id, edgeBEnd2Id);
-#if ALLOWUNSAFE
-                        contactDataPointer[tempContactData.Count] = data;
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
+                        contactDataPointer[ tempContactData.Count] = data;
                         tempContactData.Count++;
 #else
                     contactData.Add(ref data);
@@ -2582,8 +2582,8 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
                     data.Position = onA;
                     data.Depth = dot;
                     data.Id = GetContactId(edgeAStart2Id, edgeAEnd2Id, edgeBStart1Id, edgeBEnd1Id);
-#if ALLOWUNSAFE
-                        contactDataPointer[tempContactData.Count] = data;
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
+                        contactDataPointer[ tempContactData.Count] = data;
                         tempContactData.Count++;
 #else
                     contactData.Add(ref data);
@@ -2601,8 +2601,8 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
                     data.Position = onA;
                     data.Depth = dot;
                     data.Id = GetContactId(edgeAStart2Id, edgeAEnd2Id, edgeBStart2Id, edgeBEnd2Id);
-#if ALLOWUNSAFE
-                        contactDataPointer[tempContactData.Count] = data;
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
+                        contactDataPointer[ tempContactData.Count] = data;
                         tempContactData.Count++;
 #else
                     contactData.Add(ref data);
@@ -2610,7 +2610,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
                 }
 
             }
-#if ALLOWUNSAFE
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
             }
             contactData = tempContactData;
 #endif
@@ -2631,7 +2631,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
             //1: plane with normal Y
             //2: plane with normal Z
 
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             edgeStart = new Vector3();
             edgeEnd = new Vector3();
 #endif
@@ -2919,7 +2919,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
         //            Matrix3X3.TransformTranspose(ref mtd, ref orientationB, out mtdB);
 
 
-        //#if !WINDOWS
+        //#if !WINDOWS && !DISABLE_SAFECHECK
         //            Vector3 edgeA1 = new Vector3(), edgeA2 = new Vector3();
         //            Vector3 edgeB1 = new Vector3(), edgeB2 = new Vector3();
         //#else
@@ -3373,7 +3373,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
         //            id = GetContactId(edgeA1Id, edgeA2Id, edgeB1Id, edgeB2Id);
         //        }
 
-#if ALLOWUNSAFE
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
         internal static void GetFaceContacts(BoxShape a, BoxShape b, ref Vector3 positionA, ref Matrix3x3 orientationA, ref Vector3 positionB, ref Matrix3x3 orientationB, bool aIsFaceOwner, ref Vector3 mtd, out BoxContactDataCache contactData)
 #else
         internal static void GetFaceContacts(BoxShape a, BoxShape b, ref Vector3 positionA, ref Matrix3x3 orientationA, ref Vector3 positionB, ref Matrix3x3 orientationB, bool aIsFaceOwner, ref Vector3 mtd, out TinyStructList<BoxContactData> contactData)
@@ -3405,7 +3405,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
                 PruneContactsMaxDistance(ref mtd, contactData, out contactData);
         }
 
-#if ALLOWUNSAFE
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
         private static unsafe void PruneContactsMaxDistance(ref Vector3 mtd, BoxContactDataCache input, out BoxContactDataCache output)
         {
             BoxContactData* data = &input.D1;
@@ -3661,7 +3661,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
         }
 #endif
 
-#if ALLOWUNSAFE
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
         private static unsafe void ClipFacesDirect(ref BoxFace clipFace, ref BoxFace face, ref Vector3 mtd, out BoxContactDataCache outputData)
         {
             var contactData = new BoxContactDataCache();

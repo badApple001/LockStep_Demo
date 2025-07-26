@@ -96,7 +96,7 @@ namespace BEPUutilities
         {
             get
             {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector3 vector = new Vector3();
 #else
                 Vector3 vector;
@@ -121,7 +121,7 @@ namespace BEPUutilities
         {
             get
             {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector3 vector = new Vector3();
 #else
                 Vector3 vector;
@@ -146,7 +146,7 @@ namespace BEPUutilities
         {
             get
             {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector3 vector = new Vector3();
 #else
                 Vector3 vector;
@@ -171,7 +171,7 @@ namespace BEPUutilities
         {
             get
             {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector3 vector = new Vector3();
 #else
                 Vector3 vector;
@@ -196,7 +196,7 @@ namespace BEPUutilities
         {
             get
             {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector3 vector = new Vector3();
 #else
                 Vector3 vector;
@@ -221,7 +221,7 @@ namespace BEPUutilities
         {
             get
             {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector3 vector = new Vector3();
 #else
                 Vector3 vector;
@@ -974,7 +974,7 @@ namespace BEPUutilities
         /// <param name="b">Created 4x4 matrix.</param>
         public static void ToMatrix4X4(ref Matrix3x3 a, out Matrix b)
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             b = new Matrix();
 #endif
             b.M11 = a.M11;
@@ -1005,7 +1005,7 @@ namespace BEPUutilities
         /// <returns>Created 4x4 matrix.</returns>
         public static Matrix ToMatrix4X4(Matrix3x3 a)
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Matrix b = new Matrix();
 #else
             Matrix b;
@@ -1043,7 +1043,7 @@ namespace BEPUutilities
             Fix64 vX = v.X;
             Fix64 vY = v.Y;
             Fix64 vZ = v.Z;
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             result = new Vector3();
 #endif
             result.X = vX * matrix.M11 + vY * matrix.M21 + vZ * matrix.M31;
@@ -1061,7 +1061,7 @@ namespace BEPUutilities
         public static Vector3 Transform(Vector3 v, Matrix3x3 matrix)
         {
             Vector3 result;
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             result = new Vector3();
 #endif
             Fix64 vX = v.X;
@@ -1085,7 +1085,7 @@ namespace BEPUutilities
             Fix64 vX = v.X;
             Fix64 vY = v.Y;
             Fix64 vZ = v.Z;
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             result = new Vector3();
 #endif
             result.X = vX * matrix.M11 + vY * matrix.M12 + vZ * matrix.M13;
@@ -1105,7 +1105,7 @@ namespace BEPUutilities
             Fix64 vY = v.Y;
             Fix64 vZ = v.Z;
             Vector3 result;
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             result = new Vector3();
 #endif
             result.X = vX * matrix.M11 + vY * matrix.M12 + vZ * matrix.M13;

@@ -75,7 +75,7 @@ namespace BEPUphysics.CollisionShapes.ConvexShapes
         /// <param name="boundingBox">Bounding box of the transformed shape.</param>
         public override void GetBoundingBox(ref RigidTransform shapeTransform, out BoundingBox boundingBox)
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             boundingBox = new BoundingBox();
 #endif
             boundingBox.Min.X = shapeTransform.Position.X - collisionMargin;

@@ -125,7 +125,7 @@ namespace BEPUphysics.CollisionShapes.ConvexShapes
         /// <param name="boundingBox">Bounding box of the transformed shape.</param>
         public override void GetBoundingBox(ref RigidTransform shapeTransform, out BoundingBox boundingBox)
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             boundingBox = new BoundingBox();
 #endif
             Matrix3x3 o;
@@ -225,7 +225,7 @@ namespace BEPUphysics.CollisionShapes.ConvexShapes
         /// <param name="boundingBox">Bounding box in the local space.</param>
         public void GetLocalBoundingBox(ref RigidTransform shapeTransform, ref AffineTransform spaceTransform, out BoundingBox boundingBox)
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             boundingBox = new BoundingBox();
 #endif
             //TODO: This method peforms quite a few sqrts because the collision margin can get scaled, and so cannot be applied as a final step.

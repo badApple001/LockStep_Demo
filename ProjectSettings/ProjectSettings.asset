@@ -50,7 +50,7 @@ PlayerSettings:
   m_ActiveColorSpace: 1
   unsupportedMSAAFallback: 0
   m_MTRendering: 1
-  mipStripping: 0
+  mipStripping: 1
   numberOfMipsStripped: 0
   m_StackTraceTypes: 010000000100000001000000010000000100000001000000
   iosShowActivityIndicatorOnLoading: -1
@@ -266,7 +266,7 @@ PlayerSettings:
     height: 180
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
-  chromeosInputEmulation: 1
+  chromeosInputEmulation: 0
   AndroidMinifyWithR8: 0
   AndroidMinifyRelease: 0
   AndroidMinifyDebug: 0
@@ -711,13 +711,17 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
+    Android: DISABLE_SAFECHECK
     Standalone: WINDOWS;ALLOWUNSAFE;DEBUGMODE
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
-  il2cppCompilerConfiguration: {}
+    Standalone: 1
+  il2cppCompilerConfiguration:
+    Android: 2
   managedStrippingLevel:
+    Android: 4
     EmbeddedLinux: 1
     GameCoreScarlett: 1
     GameCoreXboxOne: 1

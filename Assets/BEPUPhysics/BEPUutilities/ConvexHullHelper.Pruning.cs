@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using BEPUutilities.DataStructures;
 using BEPUutilities.ResourceManagement;
 using FixMath.NET;
@@ -40,13 +39,13 @@ namespace BEPUutilities
 		/// Contains and manufactures cell sets used by the redundant point remover.  To minimize memory usage, this can be cleared
 		/// after using the RemoveRedundantPoints if it isn't going to be used again.
 		/// </summary>
-		public static LockingResourcePool<HashSet<BlockedCell>> BlockedCellSets = new LockingResourcePool<HashSet<BlockedCell>>();
+		public static LockingResourcePool<System.Collections.Generic.HashSet<BlockedCell>> BlockedCellSets = new LockingResourcePool<System.Collections.Generic.HashSet<BlockedCell>>();
 
         /// <summary>
         /// Removes redundant points.  Two points are redundant if they occupy the same hash grid cell of size 0.001.
         /// </summary>
         /// <param name="points">List of points to prune.</param>
-        public static void RemoveRedundantPoints(IList<Vector3> points)
+        public static void RemoveRedundantPoints(System.Collections.Generic.IList<Vector3> points)
         {
             RemoveRedundantPoints(points, F64.C0p001);
         }
@@ -56,7 +55,7 @@ namespace BEPUutilities
         /// </summary>
         /// <param name="points">List of points to prune.</param>
         /// <param name="cellSize">Size of cells to determine redundancy.</param>
-        public static void RemoveRedundantPoints(IList<Vector3> points, Fix64 cellSize)
+        public static void RemoveRedundantPoints(System.Collections.Generic.IList<Vector3> points, Fix64 cellSize)
         {
             var rawPoints = CommonResources.GetVectorList();
             rawPoints.AddRange(points);

@@ -116,7 +116,7 @@ namespace BEPUphysics.Constraints.Collision
                 //Fix64 dvz = entityA.linearVelocity.Z + (entityA.angularVelocity.X * ra.Y) - (entityA.angularVelocity.Y * ra.X)
                 //            - entityB.linearVelocity.Z - (entityB.angularVelocity.X * rb.Y) + (entityB.angularVelocity.Y * rb.X);
 
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector2 lambda = new Vector2();
 #else
                 Vector2 lambda;
@@ -198,7 +198,7 @@ namespace BEPUphysics.Constraints.Collision
             //lambda.Y = accumulatedImpulse.Y - previousAccumulatedImpulse;
 
             //Apply impulse
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 linear = new Vector3();
             Vector3 angular = new Vector3();
 #else
@@ -449,7 +449,7 @@ namespace BEPUphysics.Constraints.Collision
         {
 
             //Warm starting
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 linear = new Vector3();
             Vector3 angular = new Vector3();
 #else

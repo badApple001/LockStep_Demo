@@ -95,7 +95,7 @@ namespace BEPUphysics.CollisionShapes.ConvexShapes
 
         public override void GetBoundingBox(ref RigidTransform shapeTransform, out BoundingBox boundingBox)
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             boundingBox = new BoundingBox();
 #endif
             Vector3 upExtreme;

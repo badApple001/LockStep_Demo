@@ -50,7 +50,7 @@ namespace BEPUphysics.CollisionShapes
         ///<param name="boundingBox">Bounding box containing the transformed mesh shape.</param>
         public void ComputeBoundingBox(ref AffineTransform transform, out BoundingBox boundingBox)
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             boundingBox = new BoundingBox();
 #endif
             Fix64 minX = Fix64.MaxValue;

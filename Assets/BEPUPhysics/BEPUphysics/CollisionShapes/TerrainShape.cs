@@ -86,7 +86,7 @@ namespace BEPUphysics.CollisionShapes
         ///<param name="boundingBox">Bounding box of the terrain shape when transformed.</param>
         public void GetBoundingBox(ref AffineTransform transform, out BoundingBox boundingBox)
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             boundingBox = new BoundingBox();
 #endif
             Fix64 minX = Fix64.MaxValue, maxX = -Fix64.MaxValue,
@@ -415,7 +415,7 @@ namespace BEPUphysics.CollisionShapes
         ///<param name="v">Local space position at the given vertice.s</param>
         public void GetLocalPosition(int columnIndex, int rowIndex, out Vector3 v)
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             v = new Vector3();
 #endif
             v.X = columnIndex;
@@ -440,7 +440,7 @@ namespace BEPUphysics.CollisionShapes
                 rowIndex = 0;
             else if (rowIndex >= heights.GetLength(1))
                 rowIndex = heights.GetLength(1) - 1;
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             position = new Vector3();
 #endif
             position.X = columnIndex;

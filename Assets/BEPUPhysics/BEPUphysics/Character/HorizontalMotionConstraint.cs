@@ -515,7 +515,7 @@ namespace BEPUphysics.Character
         public override void ExclusiveUpdate()
         {
             //Warm start the constraint using the previous impulses and the new jacobians!
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 impulse = new Vector3();
             Vector3 torque= new Vector3();
 #else
@@ -594,7 +594,7 @@ namespace BEPUphysics.Character
 
             //Use the jacobians to put the impulse into world space.
 
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 impulse = new Vector3();
             Vector3 torque= new Vector3();
 #else
@@ -640,7 +640,7 @@ namespace BEPUphysics.Character
             {
                 //The relative velocity's x component is in the movement direction.
                 //y is the perpendicular direction.
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector2 relativeVelocity = new Vector2();
 #else
                 Vector2 relativeVelocity;

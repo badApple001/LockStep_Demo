@@ -1,4 +1,4 @@
-﻿#if !WINDOWS
+﻿#if !WINDOWS && !DISABLE_SAFECHECK
 using System.Collections;
 using System.Collections.Generic;
 

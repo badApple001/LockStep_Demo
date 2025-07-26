@@ -78,7 +78,7 @@ namespace BEPUik
 
             //Compute jacobians
             Vector3 linearA;
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             linearA = new Vector3();
 #endif
             if (currentDistance > Toolbox.Epsilon)

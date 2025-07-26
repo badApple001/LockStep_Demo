@@ -305,7 +305,7 @@ namespace BEPUutilities
         {
             Fix64 vX = v.X;
             Fix64 vY = v.Y;
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             result = new Vector2();
 #endif
             result.X = vX * matrix.M11 + vY * matrix.M21;

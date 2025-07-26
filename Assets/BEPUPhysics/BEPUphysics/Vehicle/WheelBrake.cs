@@ -225,7 +225,7 @@ namespace BEPUphysics.Vehicle
             lambda = accumulatedImpulse - previousAccumulatedImpulse;
 
             //Apply the impulse
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 linear = new Vector3();
             Vector3 angular = new Vector3();
 #else
@@ -294,7 +294,7 @@ namespace BEPUphysics.Vehicle
         {
 
             //Warm starting
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 linear = new Vector3();
             Vector3 angular = new Vector3();
 #else

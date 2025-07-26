@@ -133,7 +133,7 @@ namespace BEPUphysics.Constraints.TwoEntity.Joints
                 Vector3 velocity;
                 Vector3.Subtract(ref connectionA.angularVelocity, ref connectionB.angularVelocity, out velocity);
 
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector2 lambda = new Vector2();
 #else
                 Vector2 lambda;
@@ -297,7 +297,7 @@ namespace BEPUphysics.Constraints.TwoEntity.Joints
         public override void ExclusiveUpdate()
         {
             //Warm Starting
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 impulse = new Vector3();
 #else
             Vector3 impulse;
@@ -328,7 +328,7 @@ namespace BEPUphysics.Constraints.TwoEntity.Joints
             Vector3 velocity;
             Vector3.Subtract(ref connectionA.angularVelocity, ref connectionB.angularVelocity, out velocity);
 
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector2 lambda = new Vector2();
 #else
             Vector2 lambda;
@@ -343,7 +343,7 @@ namespace BEPUphysics.Constraints.TwoEntity.Joints
             Vector2.Add(ref accumulatedImpulse, ref lambda, out accumulatedImpulse);
 
 
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 impulse = new Vector3();
 #else
             Vector3 impulse;

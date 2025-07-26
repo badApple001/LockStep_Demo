@@ -105,7 +105,7 @@ namespace BEPUphysics.Constraints.SingleEntity
         /// </summary>
         public override Fix64 SolveIteration()
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 lambda = new Vector3();
 #else
             Vector3 lambda;

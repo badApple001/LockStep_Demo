@@ -1516,7 +1516,7 @@ namespace BEPUutilities
         /// <param name="aabb">Bounding box of the triangle.</param>
         public static void GetTriangleBoundingBox(ref Vector3 a, ref Vector3 b, ref Vector3 c, out BoundingBox aabb)
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             aabb = new BoundingBox();
 #endif
             //X axis

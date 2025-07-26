@@ -83,7 +83,7 @@ namespace BEPUphysics.Constraints.Collision
 
 
             //Apply the impulse
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 angular = new Vector3();
 #else
             Vector3 angular;
@@ -183,7 +183,7 @@ namespace BEPUphysics.Constraints.Collision
         public override void ExclusiveUpdate()
         {
             //Apply the warmstarting impulse.
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 angular = new Vector3();
 #else
             Vector3 angular;

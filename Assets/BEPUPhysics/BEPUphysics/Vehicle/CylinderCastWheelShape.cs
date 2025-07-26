@@ -84,7 +84,7 @@ namespace BEPUphysics.Vehicle
         /// </summary>
         public override void UpdateWorldTransform()
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 newPosition = new Vector3();
 #else
             Vector3 newPosition;
@@ -242,7 +242,7 @@ namespace BEPUphysics.Vehicle
         /// </summary>
         protected internal override void UpdateDetectorPosition()
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 newPosition = new Vector3();
 #else
             Vector3 newPosition;

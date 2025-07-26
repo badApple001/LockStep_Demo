@@ -332,7 +332,7 @@ namespace BEPUphysics.Constraints.TwoEntity.Motors
             if (settings.mode == MotorMode.Servomechanism)
             {
                 //Compute error
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 separation = new Vector3();
 #else
                 Vector3 separation;

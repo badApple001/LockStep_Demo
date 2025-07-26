@@ -163,7 +163,7 @@ namespace BEPUphysics.BroadPhaseSystems.SortAndSweep
             //Create a bounding box based on the bounding sphere.
             //Compute the min and max of the bounding box.
             //Loop through the cells and select bounding boxes which overlap the x axis.
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 offset = new Vector3();
 #else
             Vector3 offset;

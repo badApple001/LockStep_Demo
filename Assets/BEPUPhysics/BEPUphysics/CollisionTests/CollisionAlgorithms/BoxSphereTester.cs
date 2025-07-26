@@ -27,7 +27,7 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms
 
             Vector3 localPosition;
             RigidTransform.TransformByInverse(ref spherePosition, ref boxTransform, out localPosition);
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 localClosestPoint = new Vector3();
 #else
             Vector3 localClosestPoint;

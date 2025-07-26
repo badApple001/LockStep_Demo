@@ -175,7 +175,7 @@ namespace BEPUphysics.Constraints.TwoEntity.Joints
         {
             get
             {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector2 lambda = new Vector2();
 #else
                 Vector2 lambda;
@@ -313,7 +313,7 @@ namespace BEPUphysics.Constraints.TwoEntity.Joints
 
             #endregion
 
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector2 lambda = new Vector2();
 #else
             Vector2 lambda;
@@ -353,7 +353,7 @@ namespace BEPUphysics.Constraints.TwoEntity.Joints
             Fix64 x = lambda.X;
             Fix64 y = lambda.Y;
             //Apply impulse
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 impulse = new Vector3();
             Vector3 torque= new Vector3();
 #else
@@ -498,7 +498,7 @@ namespace BEPUphysics.Constraints.TwoEntity.Joints
         {
 
             //Warm starting
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 impulse = new Vector3();
             Vector3 torque= new Vector3();
 #else

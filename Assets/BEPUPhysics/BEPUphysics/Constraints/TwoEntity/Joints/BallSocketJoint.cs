@@ -287,7 +287,7 @@ namespace BEPUphysics.Constraints.TwoEntity.Joints
         {
             //Warm starting
             //Constraint.applyImpulse(myConnectionA, myConnectionB, ref rA, ref rB, ref accumulatedImpulse);
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 linear = new Vector3();
 #else
             Vector3 linear;
@@ -318,7 +318,7 @@ namespace BEPUphysics.Constraints.TwoEntity.Joints
         /// </summary>
         public override Fix64 SolveIteration()
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 lambda = new Vector3();
 #else
             Vector3 lambda;
@@ -344,7 +344,7 @@ namespace BEPUphysics.Constraints.TwoEntity.Joints
 
             //Apply the impulse
             //Constraint.applyImpulse(myConnectionA, myConnectionB, ref rA, ref rB, ref impulse);
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 linear = new Vector3();
 #else
             Vector3 linear;

@@ -213,7 +213,7 @@ namespace BEPUphysics.Character
         public override void ExclusiveUpdate()
         {
             //Warm start the constraint using the previous impulses and the new jacobians!
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 impulse = new Vector3();
             Vector3 torque= new Vector3();
 #else
@@ -256,7 +256,7 @@ namespace BEPUphysics.Character
             lambda = accumulatedImpulse - previousAccumulatedImpulse;
             //Use the jacobians to put the impulse into world space.
 
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 impulse = new Vector3();
             Vector3 torque= new Vector3();
 #else

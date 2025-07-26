@@ -49,7 +49,7 @@ namespace BEPUphysics.CollisionTests.Manifolds
             contactIndicesToRemove = new RawList<int>(4);
         }
 
-#if ALLOWUNSAFE
+#if ALLOWUNSAFE || DISABLE_SAFECHECK
         ///<summary>
         /// Updates the manifold.
         ///</summary>

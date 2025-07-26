@@ -488,7 +488,7 @@ namespace BEPUphysics.CollisionShapes
 
         private void GetBoundingBox(ref Matrix3x3 o, out BoundingBox boundingBox)
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             boundingBox = new BoundingBox();
 #endif
             //Sample the local directions from the matrix, implicitly transposed.
@@ -590,7 +590,7 @@ namespace BEPUphysics.CollisionShapes
         /// <param name="boundingBox">Bounding box in the local space.</param>
         public void GetLocalBoundingBox(ref RigidTransform shapeTransform, ref AffineTransform spaceTransform, out BoundingBox boundingBox)
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             boundingBox = new BoundingBox();
 #endif
             //TODO: This method peforms quite a few sqrts because the collision margin can get scaled, and so cannot be applied as a final step.

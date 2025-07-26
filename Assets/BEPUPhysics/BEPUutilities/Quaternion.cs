@@ -153,7 +153,7 @@ namespace BEPUutilities
         public static void CreateFromRotationMatrix(ref Matrix3x3 r, out Quaternion q)
         {
             Fix64 trace = r.M11 + r.M22 + r.M33;
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             q = new Quaternion();
 #endif
             if (trace >= F64.C0)
@@ -756,7 +756,7 @@ namespace BEPUutilities
         /// <param name="angle">Angle around the axis represented by the quaternion.</param>
         public static void GetAxisAngleFromQuaternion(ref Quaternion q, out Vector3 axis, out Fix64 angle)
         {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             axis = new Vector3();
 #endif
             Fix64 qw = q.W;

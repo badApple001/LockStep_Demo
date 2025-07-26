@@ -262,7 +262,7 @@ namespace BEPUphysics.Constraints.TwoEntity.JointLimits
             Fix64 angle;
             Quaternion.GetAxisAngleFromQuaternion(ref relativeRotation, out axis, out angle);
 
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector3 axisAngle = new Vector3();
 #else
             Vector3 axisAngle;
@@ -313,7 +313,7 @@ namespace BEPUphysics.Constraints.TwoEntity.JointLimits
             //Splitting it out fully would reveal two dot products with equivalent but negated jacobians.]
 
             //The jacobian is implemented by first considering the local values (2x / a^2) and (2y / b^2).
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
             Vector2 tangent = new Vector2();
 #else
             Vector2 tangent;

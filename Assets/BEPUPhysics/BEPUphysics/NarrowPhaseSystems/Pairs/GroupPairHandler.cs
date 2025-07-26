@@ -20,9 +20,9 @@ namespace BEPUphysics.NarrowPhaseSystems.Pairs
     {
         ContactManifoldConstraintGroup manifoldConstraintGroup;
 
-        Dictionary<CollidablePair, CollidablePairHandler> subPairs = new Dictionary<CollidablePair, CollidablePairHandler>();
-        HashSet<CollidablePair> containedPairs = new HashSet<CollidablePair>();
-        RawList<CollidablePair> pairsToRemove = new RawList<CollidablePair>();
+        Dictionary<CollidablePair, CollidablePairHandler> subPairs = new Dictionary<CollidablePair, CollidablePairHandler>( );
+        System.Collections.Generic.HashSet<CollidablePair> containedPairs = new System.Collections.Generic.HashSet<CollidablePair>( );
+        RawList<CollidablePair> pairsToRemove = new RawList<CollidablePair>( );
 
 
         ///<summary>
@@ -32,7 +32,7 @@ namespace BEPUphysics.NarrowPhaseSystems.Pairs
         {
             get
             {
-                return new ReadOnlyDictionary<CollidablePair, CollidablePairHandler>(subPairs);
+                return new ReadOnlyDictionary<CollidablePair, CollidablePairHandler>( subPairs );
             }
         }
 
@@ -41,9 +41,9 @@ namespace BEPUphysics.NarrowPhaseSystems.Pairs
         ///<summary>
         /// Constructs a new compound-convex pair handler.
         ///</summary>
-        protected GroupPairHandler()
+        protected GroupPairHandler( )
         {
-            manifoldConstraintGroup = new ContactManifoldConstraintGroup();
+            manifoldConstraintGroup = new ContactManifoldConstraintGroup( );
         }
 
 
@@ -54,11 +54,11 @@ namespace BEPUphysics.NarrowPhaseSystems.Pairs
         ///</summary>
         ///<param name="a">Material of the first member of the pair.</param>
         ///<param name="b">Material of the second member of the pair.</param>
-        public override void UpdateMaterialProperties(Material a, Material b)
+        public override void UpdateMaterialProperties( Material a, Material b )
         {
-            foreach (var pairHandler in subPairs.Values)
+            foreach ( var pairHandler in subPairs.Values )
             {
-                pairHandler.UpdateMaterialProperties(a, b);
+                pairHandler.UpdateMaterialProperties( a, b );
             }
         }
 
@@ -66,11 +66,11 @@ namespace BEPUphysics.NarrowPhaseSystems.Pairs
         /// Updates the material interaction properties of the pair handler's constraint.
         /// </summary>
         /// <param name="properties">Properties to use.</param>
-        public override void UpdateMaterialProperties(InteractionProperties properties)
+        public override void UpdateMaterialProperties( InteractionProperties properties )
         {
-            foreach (var pairHandler in subPairs.Values)
+            foreach ( var pairHandler in subPairs.Values )
             {
-                pairHandler.UpdateMaterialProperties(properties);
+                pairHandler.UpdateMaterialProperties( properties );
             }
         }
 
@@ -79,109 +79,109 @@ namespace BEPUphysics.NarrowPhaseSystems.Pairs
         ///</summary>
         ///<param name="entryA">First entry in the pair.</param>
         ///<param name="entryB">Second entry in the pair.</param>
-        public override void Initialize(BroadPhaseEntry entryA, BroadPhaseEntry entryB)
+        public override void Initialize( BroadPhaseEntry entryA, BroadPhaseEntry entryB )
         {
 
             //Child initialization is responsible for setting up the entries.
             //Child initialization is responsible for setting up the manifold, if any.
-            manifoldConstraintGroup.Initialize(EntityA, EntityB);
+            manifoldConstraintGroup.Initialize( EntityA, EntityB );
 
-            base.Initialize(entryA, entryB);
+            base.Initialize( entryA, entryB );
         }
 
         ///<summary>
         /// Cleans up the pair handler.
         ///</summary>
-        public override void CleanUp()
+        public override void CleanUp( )
         {
 
             //The pair handler cleanup will get rid of contacts.
-            foreach (var pairHandler in subPairs.Values)
+            foreach ( var pairHandler in subPairs.Values )
             {
-                pairHandler.CleanUp();
+                pairHandler.CleanUp( );
                 //Don't forget to give the pair back to the factory!
                 //There'd be a lot of leaks otherwise.
-                pairHandler.Factory.GiveBack(pairHandler);
+                pairHandler.Factory.GiveBack( pairHandler );
             }
-            subPairs.Clear();
+            subPairs.Clear( );
             //don't need to remove constraints directly from our group, since cleaning up our children should get rid of them.
 
-            manifoldConstraintGroup.CleanUp();
+            manifoldConstraintGroup.CleanUp( );
 
 
-            base.CleanUp();
+            base.CleanUp( );
 
             //Child type needs to null out the references.
         }
 
         //TODO: At the time of writing this, the default project configuration for the Xbox360 didn't allow optional parameters.  Could compress this.
 
-        protected void TryToAdd(Collidable a, Collidable b)
+        protected void TryToAdd( Collidable a, Collidable b )
         {
-            TryToAdd(a, b, null, null);
+            TryToAdd( a, b, null, null );
         }
 
-        protected void TryToAdd(Collidable a, Collidable b, Material materialA)
+        protected void TryToAdd( Collidable a, Collidable b, Material materialA )
         {
-            TryToAdd(a, b, materialA, null);
+            TryToAdd( a, b, materialA, null );
         }
 
-        protected void TryToAdd(Collidable a, Collidable b, Material materialA, Material materialB)
+        protected void TryToAdd( Collidable a, Collidable b, Material materialA, Material materialB )
         {
             CollisionRule rule;
-            if ((rule = CollisionRules.collisionRuleCalculator(a, b)) < CollisionRule.NoNarrowPhasePair)
+            if ( ( rule = CollisionRules.collisionRuleCalculator( a, b ) ) < CollisionRule.NoNarrowPhasePair )
             {
                 //Clamp the rule to the parent's rule.  Always use the more restrictive option.
                 //Don't have to test for NoNarrowPhasePair rule on the parent's rule because then the parent wouldn't exist!
-                if (rule < CollisionRule)
+                if ( rule < CollisionRule )
                     rule = CollisionRule;
-                var pair = new CollidablePair(a, b);
-                if (!subPairs.ContainsKey(pair))
+                var pair = new CollidablePair( a, b );
+                if ( !subPairs.ContainsKey( pair ) )
                 {
-                    var newPair = NarrowPhaseHelper.GetPairHandler(ref pair, rule);
-                    if (newPair != null)
+                    var newPair = NarrowPhaseHelper.GetPairHandler( ref pair, rule );
+                    if ( newPair != null )
                     {
-                        newPair.UpdateMaterialProperties(materialA, materialB);  //Override the materials, if necessary.
+                        newPair.UpdateMaterialProperties( materialA, materialB );  //Override the materials, if necessary.
                         newPair.Parent = this;
-                        subPairs.Add(pair, newPair);
+                        subPairs.Add( pair, newPair );
                     }
                 }
-                containedPairs.Add(pair);
+                containedPairs.Add( pair );
             }
         }
 
-        protected abstract void UpdateContainedPairs();
+        protected abstract void UpdateContainedPairs( );
 
 
         ///<summary>
         /// Updates the pair handler's contacts.
         ///</summary>
         ///<param name="dt">Timestep duration.</param>
-        protected virtual void UpdateContacts(Fix64 dt)
+        protected virtual void UpdateContacts( Fix64 dt )
         {
 
-            UpdateContainedPairs();
+            UpdateContainedPairs( );
             //Eliminate old pairs.
-            foreach (CollidablePair pair in subPairs.Keys)
+            foreach ( CollidablePair pair in subPairs.Keys )
             {
-                if (!containedPairs.Contains(pair))
-                    pairsToRemove.Add(pair);
+                if ( !containedPairs.Contains( pair ) )
+                    pairsToRemove.Add( pair );
             }
-            for (int i = 0; i < pairsToRemove.Count; i++)
+            for ( int i = 0; i < pairsToRemove.Count; i++ )
             {
-                CollidablePairHandler toReturn = subPairs[pairsToRemove.Elements[i]];
-                subPairs.Remove(pairsToRemove.Elements[i]);
-                toReturn.CleanUp();
-                toReturn.Factory.GiveBack(toReturn);
+                CollidablePairHandler toReturn = subPairs[ pairsToRemove.Elements[ i ] ];
+                subPairs.Remove( pairsToRemove.Elements[ i ] );
+                toReturn.CleanUp( );
+                toReturn.Factory.GiveBack( toReturn );
 
             }
-            containedPairs.Clear();
-            pairsToRemove.Clear();
+            containedPairs.Clear( );
+            pairsToRemove.Clear( );
 
-            foreach (CollidablePairHandler pair in subPairs.Values)
+            foreach ( CollidablePairHandler pair in subPairs.Values )
             {
-                if (pair.BroadPhaseOverlap.collisionRule < CollisionRule.NoNarrowPhaseUpdate) //Don't test if the collision rules say don't.
-                    pair.UpdateCollision(dt);
+                if ( pair.BroadPhaseOverlap.collisionRule < CollisionRule.NoNarrowPhaseUpdate ) //Don't test if the collision rules say don't.
+                    pair.UpdateCollision( dt );
             }
 
 
@@ -192,40 +192,40 @@ namespace BEPUphysics.NarrowPhaseSystems.Pairs
         /// Updates the pair handler.
         ///</summary>
         ///<param name="dt">Timestep duration.</param>
-        public override void UpdateCollision(Fix64 dt)
+        public override void UpdateCollision( Fix64 dt )
         {
 
-            if (!suppressEvents)
+            if ( !suppressEvents )
             {
-                CollidableA.EventTriggerer.OnPairUpdated(CollidableB, this);
-                CollidableB.EventTriggerer.OnPairUpdated(CollidableA, this);
+                CollidableA.EventTriggerer.OnPairUpdated( CollidableB, this );
+                CollidableB.EventTriggerer.OnPairUpdated( CollidableA, this );
             }
 
-            UpdateContacts(dt);
+            UpdateContacts( dt );
 
 
-            if (contactCount > 0)
+            if ( contactCount > 0 )
             {
-                if (!suppressEvents)
+                if ( !suppressEvents )
                 {
-                    CollidableA.EventTriggerer.OnPairTouching(CollidableB, this);
-                    CollidableB.EventTriggerer.OnPairTouching(CollidableA, this);
+                    CollidableA.EventTriggerer.OnPairTouching( CollidableB, this );
+                    CollidableB.EventTriggerer.OnPairTouching( CollidableA, this );
                 }
 
-                if (previousContactCount == 0)
+                if ( previousContactCount == 0 )
                 {
                     //collision started!
-                    CollidableA.EventTriggerer.OnInitialCollisionDetected(CollidableB, this);
-                    CollidableB.EventTriggerer.OnInitialCollisionDetected(CollidableA, this);
+                    CollidableA.EventTriggerer.OnInitialCollisionDetected( CollidableB, this );
+                    CollidableB.EventTriggerer.OnInitialCollisionDetected( CollidableA, this );
 
                     //No solver updateable addition in this method since it's handled by the "AddSolverUpdateable" method.
                 }
             }
-            else if (previousContactCount > 0 && !suppressEvents)
+            else if ( previousContactCount > 0 && !suppressEvents )
             {
                 //collision ended!
-                CollidableA.EventTriggerer.OnCollisionEnded(CollidableB, this);
-                CollidableB.EventTriggerer.OnCollisionEnded(CollidableA, this);
+                CollidableA.EventTriggerer.OnCollisionEnded( CollidableB, this );
+                CollidableB.EventTriggerer.OnCollisionEnded( CollidableA, this );
 
                 //No solver updateable removal in this method since it's handled by the "RemoveSolverUpdateable" method.
             }
@@ -238,86 +238,86 @@ namespace BEPUphysics.NarrowPhaseSystems.Pairs
         ///</summary>
         ///<param name="requester">Collidable requesting the update.</param>
         ///<param name="dt">Timestep duration.</param>
-        public override void UpdateTimeOfImpact(Collidable requester, Fix64 dt)
+        public override void UpdateTimeOfImpact( Collidable requester, Fix64 dt )
         {
             timeOfImpact = F64.C1;
-            foreach (CollidablePairHandler pair in subPairs.Values)
+            foreach ( CollidablePairHandler pair in subPairs.Values )
             {
                 //The system uses the identity of the requester to determine if it needs to do handle the TOI calculation.
                 //Use the child pair's own entries as a proxy.
-                if (MotionSettings.CCDFilter(pair))
+                if ( MotionSettings.CCDFilter( pair ) )
                 {
-                    if (BroadPhaseOverlap.entryA == requester)
-                        pair.UpdateTimeOfImpact((Collidable) pair.BroadPhaseOverlap.entryA, dt);
+                    if ( BroadPhaseOverlap.entryA == requester )
+                        pair.UpdateTimeOfImpact( ( Collidable ) pair.BroadPhaseOverlap.entryA, dt );
                     else
-                        pair.UpdateTimeOfImpact((Collidable) pair.BroadPhaseOverlap.entryB, dt);
-                    if (pair.timeOfImpact < timeOfImpact)
+                        pair.UpdateTimeOfImpact( ( Collidable ) pair.BroadPhaseOverlap.entryB, dt );
+                    if ( pair.timeOfImpact < timeOfImpact )
                         timeOfImpact = pair.timeOfImpact;
                 }
             }
         }
 
 
-        protected internal override void GetContactInformation(int index, out ContactInformation info)
+        protected internal override void GetContactInformation( int index, out ContactInformation info )
         {
-            foreach (CollidablePairHandler pair in subPairs.Values)
+            foreach ( CollidablePairHandler pair in subPairs.Values )
             {
                 int count = pair.Contacts.Count;
-                if (index - count < 0)
+                if ( index - count < 0 )
                 {
-                    pair.GetContactInformation(index, out info);
+                    pair.GetContactInformation( index, out info );
                     return;
                 }
                 index -= count;
             }
-            throw new IndexOutOfRangeException("Contact index is not present in the pair.");
+            throw new IndexOutOfRangeException( "Contact index is not present in the pair." );
 
         }
 
 
-        void IPairHandlerParent.AddSolverUpdateable(SolverUpdateable addedItem)
+        void IPairHandlerParent.AddSolverUpdateable( SolverUpdateable addedItem )
         {
 
-            manifoldConstraintGroup.Add(addedItem);
+            manifoldConstraintGroup.Add( addedItem );
             //If this is the first child solver item to be added, we need to add ourselves to our parent too.
-            if (manifoldConstraintGroup.SolverUpdateables.Count == 1)
+            if ( manifoldConstraintGroup.SolverUpdateables.Count == 1 )
             {
-                if (Parent != null)
-                    Parent.AddSolverUpdateable(manifoldConstraintGroup);
-                else if (NarrowPhase != null)
-                    NarrowPhase.NotifyUpdateableAdded(manifoldConstraintGroup);
+                if ( Parent != null )
+                    Parent.AddSolverUpdateable( manifoldConstraintGroup );
+                else if ( NarrowPhase != null )
+                    NarrowPhase.NotifyUpdateableAdded( manifoldConstraintGroup );
             }
 
         }
 
-        void IPairHandlerParent.RemoveSolverUpdateable(SolverUpdateable removedItem)
+        void IPairHandlerParent.RemoveSolverUpdateable( SolverUpdateable removedItem )
         {
 
-            manifoldConstraintGroup.Remove(removedItem);
+            manifoldConstraintGroup.Remove( removedItem );
 
             //If this is the last child solver item, we need to remove ourselves from our parent too.
-            if (manifoldConstraintGroup.SolverUpdateables.Count == 0)
+            if ( manifoldConstraintGroup.SolverUpdateables.Count == 0 )
             {
-                if (Parent != null)
-                    Parent.RemoveSolverUpdateable(manifoldConstraintGroup);
-                else if (NarrowPhase != null)
-                    NarrowPhase.NotifyUpdateableRemoved(manifoldConstraintGroup);
+                if ( Parent != null )
+                    Parent.RemoveSolverUpdateable( manifoldConstraintGroup );
+                else if ( NarrowPhase != null )
+                    NarrowPhase.NotifyUpdateableRemoved( manifoldConstraintGroup );
             }
 
 
         }
 
 
-        void IPairHandlerParent.OnContactAdded(Contact contact)
+        void IPairHandlerParent.OnContactAdded( Contact contact )
         {
             contactCount++;
-            OnContactAdded(contact);
+            OnContactAdded( contact );
         }
 
-        void IPairHandlerParent.OnContactRemoved(Contact contact)
+        void IPairHandlerParent.OnContactRemoved( Contact contact )
         {
             contactCount--;
-            OnContactRemoved(contact);
+            OnContactRemoved( contact );
         }
 
 
@@ -335,13 +335,13 @@ namespace BEPUphysics.NarrowPhaseSystems.Pairs
         /// <summary>
         /// Clears the pair's contacts.
         /// </summary>
-        public override void ClearContacts()
+        public override void ClearContacts( )
         {
-            foreach (var pair in subPairs.Values)
+            foreach ( var pair in subPairs.Values )
             {
-                pair.ClearContacts();
+                pair.ClearContacts( );
             }
-            base.ClearContacts();
+            base.ClearContacts( );
         }
     }
 }

@@ -162,7 +162,7 @@ namespace BEPUutilities
         {
             get
             {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector3 vector = new Vector3();
 #else
                 Vector3 vector;
@@ -187,7 +187,7 @@ namespace BEPUutilities
         {
             get
             {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector3 vector = new Vector3();
 #else
                 Vector3 vector;
@@ -212,7 +212,7 @@ namespace BEPUutilities
         {
             get
             {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector3 vector = new Vector3();
 #else
                 Vector3 vector;
@@ -237,7 +237,7 @@ namespace BEPUutilities
         {
             get
             {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector3 vector = new Vector3();
 #else
                 Vector3 vector;
@@ -262,7 +262,7 @@ namespace BEPUutilities
         {
             get
             {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector3 vector = new Vector3();
 #else
                 Vector3 vector;
@@ -287,7 +287,7 @@ namespace BEPUutilities
         {
             get
             {
-#if !WINDOWS
+#if !WINDOWS && !DISABLE_SAFECHECK
                 Vector3 vector = new Vector3();
 #else
                 Vector3 vector;
