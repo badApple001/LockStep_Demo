@@ -1,4 +1,4 @@
-﻿#define DEBUGMODE
+﻿#define DEBUG
 #define SERVER
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace AE_ServerNet
     {
         public static void Log(string msg)
         {
-#if DEBUGMODE
+#if DEBUG
 #if SERVER
             Console.WriteLine(msg);
 #else

@@ -184,23 +184,30 @@ namespace AE_ServerNet
             }
 
             BaseMessage message = state as BaseMessage;
-
             if (message == null)
             {
                 AEDebug.Log($"接收消息出错: 消息内容为null");
                 return;
             }
 
+#if DEBUG
+            //记录接收的数据包大小
+            serverSocket.TotalReceiveBytes += message.GetByteLength( );
+#endif
             listeners[message.GetMessageID()]?.Invoke(message, this);
         }
 
+        
         public void Send(BaseMessage info)
         {
+
             if (!Connected)
             {
                 serverSocket.CloseClientSocket(this);
                 return;
             }
+
+
             try
             {
                 SocketAsyncEventArgs argsSend = new SocketAsyncEventArgs();
@@ -208,6 +215,12 @@ namespace AE_ServerNet
                 argsSend.SetBuffer(bytes, 0, bytes.Length);
                 argsSend.Completed += SendCallback;
                 this.socket.SendAsync(argsSend);
+
+
+#if DEBUG
+            //记录发送的数据包大小
+            serverSocket.TotalSendBytes += ( 8 + bytes.Length );
+#endif
             }
             catch (Exception e)
             {
@@ -216,17 +229,21 @@ namespace AE_ServerNet
             }
         }
 
+
         private void SendCallback(object obj, SocketAsyncEventArgs args)
         {
             if (args.SocketError == SocketError.Success)
             {
+
             }
             else
             {
+
                 AEDebug.Log($"{args.SocketError}");
                 Close();
             }
         }
+
 
 
         public void Close()

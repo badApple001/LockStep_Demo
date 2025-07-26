@@ -10,6 +10,12 @@ namespace AE_ServerNet
         public Socket socket;
         public Dictionary<int, ClientSocket> clientSockets = new Dictionary<int, ClientSocket>();
 
+#if DEBUG
+        public long TotalSendBytes = 0;
+        public long TotalReceiveBytes = 0;
+#endif
+
+
         /// <summary>
         /// 开启服务器
         /// </summary>
