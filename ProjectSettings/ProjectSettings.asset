@@ -711,7 +711,7 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: DISABLE_SAFECHECK
+    Android: DISABLE_SAFECHECK;DEBUGMODE
     Standalone: WINDOWS;ALLOWUNSAFE;DEBUGMODE
   additionalCompilerArguments: {}
   platformArchitecture: {}

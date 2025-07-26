@@ -38,14 +38,6 @@ namespace LockStep_Demo
             }
         }
 
-        public void OnFixedUpdate(float delta)
-        {
-            for (int i = 0; i < m_players.Count; i++)
-            {
-                m_players[i].OnFixedUpdate(delta);
-            }
-        }
-
         /// <summary>
         /// 发送注册当前客户端玩家
         /// </summary>

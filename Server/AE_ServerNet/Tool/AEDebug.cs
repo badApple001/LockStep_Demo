@@ -1,23 +1,14 @@
-﻿#define DEBUG
-#define SERVER
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace AE_ServerNet
 {
     public static class AEDebug
     {
+        [Conditional( "DEBUG" )]
         public static void Log(string msg)
         {
 #if DEBUG
-#if SERVER
             Console.WriteLine(msg);
-#else
-            UnityEngine.Debug.Log(msg);
-#endif
 #endif
         }
     }

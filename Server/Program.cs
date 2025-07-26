@@ -1,4 +1,5 @@
-﻿using LockStep_Demo_Server;
+﻿using GameServer.Logic.Handler;
+using GameServer.Logic.Rooms;
 
 namespace AE_ServerNet
 {
@@ -10,18 +11,21 @@ namespace AE_ServerNet
 
         static void Main( string[] args )
         {
-            // MainHandler.AddAllListener();
 
             socket = new ServerSocket( );
             socket.Start( ServerIp, LocalPoint, 1024 );
-
             AEDebug.Log( "服务器开启成功" );
-            var room = new Room( );
+
+
+            MainHandler.AddAllListener( );
+            AEDebug.Log( "MainHandler开启监听" );
+            
+            var room = new BattleRoom( );
+            AEDebug.Log( "创建房间" );
+
             while ( true )
             {
                 string input = Console.ReadLine( );
-
-
 #if DEBUG
                 OnDebugUpdate( );
 #endif
@@ -44,8 +48,6 @@ namespace AE_ServerNet
 
 
             Console.Title = $"send: {socket.TotalSendBytes / 1024}kb | recive: {socket.TotalReceiveBytes / 1024}kb";
-
-
         }
 #endif
 

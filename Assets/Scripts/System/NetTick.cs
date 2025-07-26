@@ -1,13 +1,8 @@
-#define Test
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using AE_BEPUPhysics_Addition;
 using AE_BEPUPhysics_Addition.Interface;
 using AE_ClientNet;
 using AE_NetMessage;
-using BEPUutilities;
-using Google.Protobuf.WellKnownTypes;
 using NetGameRunning;
 using UnityEngine;
 
@@ -49,36 +44,19 @@ namespace LockStep_Demo
             NetAsyncMgr.Connect(m_serverIP, m_port);
         }
 
-#if Test
-        [ContextMenu("测试发送注册自己")]
-        public void TestSendRegisterSelfPlayer()
+
+        public void JoinRoom( )
         {
-            m_playerMgr.SendRegisterPlayer();
+            m_playerMgr.SendRegisterPlayer( );
         }
 
-        [ContextMenu("测试开始同步")]
-        public void TestSendStartRoom()
-        {
-            var startRoomMsg = new StartRoomMassage();
-            NetAsyncMgr.Send(startRoomMsg);
-            AEDebug.Log("开始同步");
-        }
 
-        [ContextMenu("测试as需要消耗多少时间")]
-        public void TestAsCostTime()
+        public void StartGame( )
         {
-            var oldTime = DateTime.Now;
-            for (int i = 0; i < 10000; i++)
-            {
-                BaseMessage msg = new StartRoomMassage();
-                var startRoomMsg = msg as StartRoomMassage;
-            }
-
-            var newTime = DateTime.Now;
-            var interval = newTime - oldTime;
-            AEDebug.Log(interval.TotalMilliseconds);
+            var startRoomMsg = new StartRoomMassage( );
+            NetAsyncMgr.Send( startRoomMsg );
+            AEDebug.Log( "开始同步" );
         }
-#endif
 
         private void Update()
         {
@@ -87,12 +65,6 @@ namespace LockStep_Demo
             if (m_curFrame == -1) return;
             m_AEPhysicsMgr.UpdatePosition();
             Upload(Time.deltaTime);
-        }
-
-        private void FixedUpdate()
-        {
-            if (!NetAsyncMgr.IsConnected) return;
-            m_playerMgr.OnFixedUpdate(Time.fixedDeltaTime);
         }
 
         /// <summary>
@@ -105,15 +77,6 @@ namespace LockStep_Demo
             var updateDate = updateMessage.data;
             if (updateDate.CurFrameIndex == m_curFrame + 1)
             {
-                if (updateDate.PlayerInputs[0].JoyX == 0 && updateDate.PlayerInputs[0].JoyY == 0)
-                {
-                    curZeroInput = true;
-                }
-                else
-                {
-                    curZeroInput = false;
-                }
-
                 m_curFrame = updateDate.CurFrameIndex;
                 m_reciveFromLastUpLoad = true;
                 m_playerMgr.OnLogincUpdate(updateDate);
@@ -122,16 +85,6 @@ namespace LockStep_Demo
 
             AEDebug.Log(updateDate.Delta);
             AEDebug.Log("接收到第:" + updateDate.CurFrameIndex + "帧数据");
-
-
-            if (updateDate.PlayerInputs[0].JoyX == 0 && updateDate.PlayerInputs[0].JoyY == 0)
-            {
-                lastZeroInput = true;
-            }
-            else
-            {
-                lastZeroInput = false;
-            }
         }
 
         /// <summary>
@@ -151,9 +104,6 @@ namespace LockStep_Demo
                 m_reciveFromLastUpLoad = false;
             }
         }
-
-        private bool curZeroInput;
-        private bool lastZeroInput;
 
         /// <summary>
         /// 上传玩家消息
