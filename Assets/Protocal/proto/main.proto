@@ -17,7 +17,12 @@ message UpdateMessageData {
   float delta = 4;
 }
 
-message RegisterMessageData {
+message ReqJoinRoom {
+  int32 skinID = 1;
+}
+
+message ResJoinRoom {
   int32 playerID = 1;
   int32 skinID = 2;
+  int32 isSelf = 3;
 }

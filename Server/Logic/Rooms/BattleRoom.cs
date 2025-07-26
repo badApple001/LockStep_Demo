@@ -9,13 +9,11 @@ namespace GameServer.Logic.Rooms
     {
 
         public int CurFrame { get; private set; }
-
         private Dictionary<int, ClientSocket> m_players;
-
-        private UpdateMessage m_currentFrameplayerInputs;
         private Dictionary<int, bool> m_IDRecived;
-
+        private UpdateMessage m_currentFrameplayerInputs;
         private DateTime m_lastSendUpdateMsg;
+        private int m_entityIdBase = 0; // | CampId(16) | offset(16) |
 
         public BattleRoom( )
         {
@@ -24,7 +22,7 @@ namespace GameServer.Logic.Rooms
             m_IDRecived = new Dictionary<int, bool>( );
 
             ClientSocket.AddListener( MessagePool.UpLoadMessage_ID, RecivePlayerInput );
-            ClientSocket.AddListener( MessagePool.RegisterSelfMessage_ID, ReciveRegisterSelfPlayer );
+            ClientSocket.AddListener( MessagePool.Req_JoinRoom_ID, On_Req_JoinRoom_Msg );
             ClientSocket.AddListener( MessagePool.HeartMessage_ID, ReciveHearMessage );
             ClientSocket.AddListener( MessagePool.StartRoomMassage_ID, StartRoom );
         }
@@ -106,7 +104,7 @@ namespace GameServer.Logic.Rooms
         /// </summary>
         /// <param name="message"></param>
         /// <param name="socket"></param>
-        private void ReciveRegisterSelfPlayer( BaseMessage message, ClientSocket socket )
+        private void On_Req_JoinRoom_Msg( BaseMessage message, ClientSocket socket )
         {
             if ( m_players.ContainsValue( socket ) )
             {
@@ -114,29 +112,27 @@ namespace GameServer.Logic.Rooms
                 return;
             }
 
-            foreach ( var client in socket.serverSocket.clientSockets.Values )
+            var req_msg = message as Req_JoinRoom;
+            if ( req_msg == null )
             {
-                //返回注册当前请求客户端
-                if ( socket == client )
-                {
-                    //注册自己
-                    RegisterSelfMessage registerSelfMessage = new RegisterSelfMessage( );
-                    registerSelfMessage.data.PlayerID = m_players.Count;
-                    client.Send( registerSelfMessage );
-                }
-                //返回注册其他客户端
-                else
-                {
-                    RegisterMessage registerMessage = new RegisterMessage( );
-                    registerMessage.data.PlayerID = m_players.Count;
-                    client.Send( registerMessage );
-                }
+                AEDebug.Log( "ReciveRegisterSelfPlayer 消息结构有问题" );
+                return;
             }
 
+            int playerId = ++m_entityIdBase;
+            int skinId = req_msg.data.SkinID;
+            foreach ( var client in socket.serverSocket.clientSockets.Values )
+            {
+                Res_JoinRoom res_msg = new Res_JoinRoom( );
+                res_msg.data.PlayerID = playerId;
+                res_msg.data.SkinID = skinId;
+                res_msg.data.IsSelf = socket == client ? 1 : 0;
+                client.Send( res_msg );
+            }
             AEDebug.Log( "注册消息" + m_players.Count );
-            m_IDRecived.Add( m_players.Count, false );
-            m_players.Add( m_players.Count, socket );
+            m_IDRecived.Add( playerId, false );
         }
+
 
         /// <summary>
         /// 接收到心跳消息

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5856056ab6c6f4896890c91c73454b, type: 3}
   m_Name: ProtocolGenrateData
   m_EditorClassIdentifier: 
-  protoFilePath: F:/WorkPlace/UnityProject/LockStep_Demo/Assets/Protocal/proto
-  messageXMLFilePath: F:/WorkPlace/UnityProject/LockStep_Demo/Assets/Protocal/proto/Messages.XML
-  outputFilePath: F:/WorkPlace/UnityProject/LockStep_Demo/Assets/Protocal/csharp
+  protoFilePath: E:/UnityProjects/LockStep/LockStep_Demo/Assets/Protocal/proto
+  messageXMLFilePath: E:/UnityProjects/LockStep/LockStep_Demo/Assets/Protocal/proto/Messages.XML
+  outputFilePath: E:/UnityProjects/LockStep/LockStep_Demo/Assets/Protocal/csharp
   protoExepath: F:/WorkPlace/LearnFromTang/Teach_Net/Protobuf/protoc.exe

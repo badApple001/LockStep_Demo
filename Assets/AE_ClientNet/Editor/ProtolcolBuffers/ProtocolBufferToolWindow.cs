@@ -14,7 +14,7 @@ namespace AE_ClientNet
         [MenuItem("Protobuf/配置生成Window")]
         public static void ShowWindow()
         {
-            ProtocolBufferToolWindow window = GetWindowWithRect<ProtocolBufferToolWindow>(new Rect(0, 0, 550, 330));
+            ProtocolBufferToolWindow window = GetWindowWithRect<ProtocolBufferToolWindow>(new Rect(0, 0, 800, 600));
             window.Show();
         }
 
