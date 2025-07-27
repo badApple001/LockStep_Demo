@@ -117,8 +117,7 @@ namespace GameScripts
                 _AEPhysicsMgr.PhysicsUpdate( updateDate.Delta );
             }
 
-            AEDebug.Log( updateDate.Delta );
-            AEDebug.Log( "接收到第:" + updateDate.CurFrameIndex + "帧数据" );
+            AEDebug.Log( "接收到第:" + updateDate.CurFrameIndex + "帧数据  " + updateDate.Delta.ToString( ) );
         }
 
         /// <summary>
@@ -139,6 +138,7 @@ namespace GameScripts
             }
         }
 
+        private Vector3 oldMousePos = Vector3.zero;
         /// <summary>
         /// 上传玩家消息
         /// </summary>
@@ -146,6 +146,14 @@ namespace GameScripts
         {
             UpLoadMessage upLoadMsg = new UpLoadMessage( );
             var playerInput = upLoadMsg.data;
+
+            if( oldMousePos != Input.mousePosition )
+            {
+                var delta = Input.mousePosition - oldMousePos;
+                var dir = delta.normalized;
+                playerInput.CamX = Mathf.FloorToInt( dir.x * 1000 ) / 1000f;
+                playerInput.CamY = Mathf.FloorToInt( dir.y * 1000 ) / 1000f;
+            }
 
             playerInput.JoyX = Input.GetAxis( "Horizontal" );
             playerInput.JoyY = Input.GetAxis( "Vertical" );

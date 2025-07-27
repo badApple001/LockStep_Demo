@@ -13,6 +13,14 @@
     <message id="10004" systemMessage="0" name="Res_JoinRoom" namespace="NetGameRunning"
              datatype="NetGameRunning.ResJoinRoom"/>
     <message id="10005" systemMessage="1" name="StartRoomMassage" namespace="NetGameRunning"/>
+   
+    <message id="10006" systemMessage="0" name="Msg_PlayerLeave" namespace="NetGameRunning" 
+             datatype="NetGameRunning.PlayerLeaveData"/>
+
+    <message id="10007" systemMessage="0" name="Msg_SyncRoomPlayerMsg" namespace="NetGameRunning" 
+             datatype="NetGameRunning.SyncRoomPlayersData"/>
+
+
     <!-- 核心玩法 -->
 
 </messages>

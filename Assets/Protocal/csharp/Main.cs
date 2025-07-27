@@ -24,22 +24,29 @@ namespace NetGameRunning {
     static MainReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgptYWluLnByb3RvEg5OZXRHYW1lUnVubmluZyJuCg9QbGF5ZXJJbnB1dERh",
-            "dGESDAoEam95WBgBIAEoAhIMCgRqb3lZGAIgASgCEhAKCHBsYXllcklEGAMg",
-            "ASgFEhUKDWN1ckZyYW1lSW5kZXgYBCABKAUSFgoObmV4dEZyYW1lSW5kZXgY",
-            "BSABKAUiiAEKEVVwZGF0ZU1lc3NhZ2VEYXRhEhUKDWN1ckZyYW1lSW5kZXgY",
-            "ASABKAUSFgoObmV4dEZyYW1lSW5kZXgYAiABKAUSNQoMcGxheWVySW5wdXRz",
-            "GAMgAygLMh8uTmV0R2FtZVJ1bm5pbmcuUGxheWVySW5wdXREYXRhEg0KBWRl",
-            "bHRhGAQgASgCIh0KC1JlcUpvaW5Sb29tEg4KBnNraW5JRBgBIAEoBSI/CgtS",
-            "ZXNKb2luUm9vbRIQCghwbGF5ZXJJRBgBIAEoBRIOCgZza2luSUQYAiABKAUS",
-            "DgoGaXNTZWxmGAMgASgFYgZwcm90bzM="));
+            "CgptYWluLnByb3RvEg5OZXRHYW1lUnVubmluZyKKAQoPUGxheWVySW5wdXRE",
+            "YXRhEgwKBGpveVgYASABKAISDAoEam95WRgCIAEoAhIMCgRjYW1YGAMgASgC",
+            "EgwKBGNhbVkYBCABKAISEAoIcGxheWVySUQYBSABKAUSFQoNY3VyRnJhbWVJ",
+            "bmRleBgGIAEoBRIWCg5uZXh0RnJhbWVJbmRleBgHIAEoBSKIAQoRVXBkYXRl",
+            "TWVzc2FnZURhdGESFQoNY3VyRnJhbWVJbmRleBgBIAEoBRIWCg5uZXh0RnJh",
+            "bWVJbmRleBgCIAEoBRI1CgxwbGF5ZXJJbnB1dHMYAyADKAsyHy5OZXRHYW1l",
+            "UnVubmluZy5QbGF5ZXJJbnB1dERhdGESDQoFZGVsdGEYBCABKAIiHQoLUmVx",
+            "Sm9pblJvb20SDgoGc2tpbklEGAEgASgFIiMKD1BsYXllckxlYXZlRGF0YRIQ",
+            "CghwbGF5ZXJJRBgBIAEoBSJHCgtSZXNKb2luUm9vbRIOCgZzZWxmSUQYASAB",
+            "KAUSKAoEdGVhbRgCIAMoCzIaLk5ldEdhbWVSdW5uaW5nLlBsYXllckRhdGEi",
+            "LgoKUGxheWVyRGF0YRIQCghwbGF5ZXJJRBgBIAEoBRIOCgZza2luSUQYAiAB",
+            "KAUiPwoTU3luY1Jvb21QbGF5ZXJzRGF0YRIoCgR0ZWFtGAEgAygLMhouTmV0",
+            "R2FtZVJ1bm5pbmcuUGxheWVyRGF0YWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::NetGameRunning.PlayerInputData), global::NetGameRunning.PlayerInputData.Parser, new[]{ "JoyX", "JoyY", "PlayerID", "CurFrameIndex", "NextFrameIndex" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetGameRunning.PlayerInputData), global::NetGameRunning.PlayerInputData.Parser, new[]{ "JoyX", "JoyY", "CamX", "CamY", "PlayerID", "CurFrameIndex", "NextFrameIndex" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::NetGameRunning.UpdateMessageData), global::NetGameRunning.UpdateMessageData.Parser, new[]{ "CurFrameIndex", "NextFrameIndex", "PlayerInputs", "Delta" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::NetGameRunning.ReqJoinRoom), global::NetGameRunning.ReqJoinRoom.Parser, new[]{ "SkinID" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::NetGameRunning.ResJoinRoom), global::NetGameRunning.ResJoinRoom.Parser, new[]{ "PlayerID", "SkinID", "IsSelf" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetGameRunning.PlayerLeaveData), global::NetGameRunning.PlayerLeaveData.Parser, new[]{ "PlayerID" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetGameRunning.ResJoinRoom), global::NetGameRunning.ResJoinRoom.Parser, new[]{ "SelfID", "Team" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetGameRunning.PlayerData), global::NetGameRunning.PlayerData.Parser, new[]{ "PlayerID", "SkinID" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NetGameRunning.SyncRoomPlayersData), global::NetGameRunning.SyncRoomPlayersData.Parser, new[]{ "Team" }, null, null, null)
           }));
     }
     #endregion
@@ -73,6 +80,8 @@ namespace NetGameRunning {
     public PlayerInputData(PlayerInputData other) : this() {
       joyX_ = other.joyX_;
       joyY_ = other.joyY_;
+      camX_ = other.camX_;
+      camY_ = other.camY_;
       playerID_ = other.playerID_;
       curFrameIndex_ = other.curFrameIndex_;
       nextFrameIndex_ = other.nextFrameIndex_;
@@ -106,8 +115,30 @@ namespace NetGameRunning {
       }
     }
 
+    /// <summary>Field number for the "camX" field.</summary>
+    public const int CamXFieldNumber = 3;
+    private float camX_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float CamX {
+      get { return camX_; }
+      set {
+        camX_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "camY" field.</summary>
+    public const int CamYFieldNumber = 4;
+    private float camY_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float CamY {
+      get { return camY_; }
+      set {
+        camY_ = value;
+      }
+    }
+
     /// <summary>Field number for the "playerID" field.</summary>
-    public const int PlayerIDFieldNumber = 3;
+    public const int PlayerIDFieldNumber = 5;
     private int playerID_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int PlayerID {
@@ -118,7 +149,7 @@ namespace NetGameRunning {
     }
 
     /// <summary>Field number for the "curFrameIndex" field.</summary>
-    public const int CurFrameIndexFieldNumber = 4;
+    public const int CurFrameIndexFieldNumber = 6;
     private int curFrameIndex_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CurFrameIndex {
@@ -129,7 +160,7 @@ namespace NetGameRunning {
     }
 
     /// <summary>Field number for the "nextFrameIndex" field.</summary>
-    public const int NextFrameIndexFieldNumber = 5;
+    public const int NextFrameIndexFieldNumber = 7;
     private int nextFrameIndex_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int NextFrameIndex {
@@ -154,6 +185,8 @@ namespace NetGameRunning {
       }
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(JoyX, other.JoyX)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(JoyY, other.JoyY)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(CamX, other.CamX)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(CamY, other.CamY)) return false;
       if (PlayerID != other.PlayerID) return false;
       if (CurFrameIndex != other.CurFrameIndex) return false;
       if (NextFrameIndex != other.NextFrameIndex) return false;
@@ -165,6 +198,8 @@ namespace NetGameRunning {
       int hash = 1;
       if (JoyX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(JoyX);
       if (JoyY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(JoyY);
+      if (CamX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(CamX);
+      if (CamY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(CamY);
       if (PlayerID != 0) hash ^= PlayerID.GetHashCode();
       if (CurFrameIndex != 0) hash ^= CurFrameIndex.GetHashCode();
       if (NextFrameIndex != 0) hash ^= NextFrameIndex.GetHashCode();
@@ -189,16 +224,24 @@ namespace NetGameRunning {
         output.WriteRawTag(21);
         output.WriteFloat(JoyY);
       }
+      if (CamX != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(CamX);
+      }
+      if (CamY != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(CamY);
+      }
       if (PlayerID != 0) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(40);
         output.WriteInt32(PlayerID);
       }
       if (CurFrameIndex != 0) {
-        output.WriteRawTag(32);
+        output.WriteRawTag(48);
         output.WriteInt32(CurFrameIndex);
       }
       if (NextFrameIndex != 0) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(56);
         output.WriteInt32(NextFrameIndex);
       }
       if (_unknownFields != null) {
@@ -213,6 +256,12 @@ namespace NetGameRunning {
         size += 1 + 4;
       }
       if (JoyY != 0F) {
+        size += 1 + 4;
+      }
+      if (CamX != 0F) {
+        size += 1 + 4;
+      }
+      if (CamY != 0F) {
         size += 1 + 4;
       }
       if (PlayerID != 0) {
@@ -240,6 +289,12 @@ namespace NetGameRunning {
       }
       if (other.JoyY != 0F) {
         JoyY = other.JoyY;
+      }
+      if (other.CamX != 0F) {
+        CamX = other.CamX;
+      }
+      if (other.CamY != 0F) {
+        CamY = other.CamY;
       }
       if (other.PlayerID != 0) {
         PlayerID = other.PlayerID;
@@ -269,15 +324,23 @@ namespace NetGameRunning {
             JoyY = input.ReadFloat();
             break;
           }
-          case 24: {
-            PlayerID = input.ReadInt32();
+          case 29: {
+            CamX = input.ReadFloat();
             break;
           }
-          case 32: {
-            CurFrameIndex = input.ReadInt32();
+          case 37: {
+            CamY = input.ReadFloat();
             break;
           }
           case 40: {
+            PlayerID = input.ReadInt32();
+            break;
+          }
+          case 48: {
+            CurFrameIndex = input.ReadInt32();
+            break;
+          }
+          case 56: {
             NextFrameIndex = input.ReadInt32();
             break;
           }
@@ -621,6 +684,135 @@ namespace NetGameRunning {
 
   }
 
+  public sealed partial class PlayerLeaveData : pb::IMessage<PlayerLeaveData> {
+    private static readonly pb::MessageParser<PlayerLeaveData> _parser = new pb::MessageParser<PlayerLeaveData>(() => new PlayerLeaveData());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<PlayerLeaveData> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::NetGameRunning.MainReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public PlayerLeaveData() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public PlayerLeaveData(PlayerLeaveData other) : this() {
+      playerID_ = other.playerID_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public PlayerLeaveData Clone() {
+      return new PlayerLeaveData(this);
+    }
+
+    /// <summary>Field number for the "playerID" field.</summary>
+    public const int PlayerIDFieldNumber = 1;
+    private int playerID_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int PlayerID {
+      get { return playerID_; }
+      set {
+        playerID_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as PlayerLeaveData);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(PlayerLeaveData other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (PlayerID != other.PlayerID) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (PlayerID != 0) hash ^= PlayerID.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (PlayerID != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(PlayerID);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (PlayerID != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerID);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(PlayerLeaveData other) {
+      if (other == null) {
+        return;
+      }
+      if (other.PlayerID != 0) {
+        PlayerID = other.PlayerID;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            PlayerID = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   public sealed partial class ResJoinRoom : pb::IMessage<ResJoinRoom> {
     private static readonly pb::MessageParser<ResJoinRoom> _parser = new pb::MessageParser<ResJoinRoom>(() => new ResJoinRoom());
     private pb::UnknownFieldSet _unknownFields;
@@ -629,7 +821,7 @@ namespace NetGameRunning {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::NetGameRunning.MainReflection.Descriptor.MessageTypes[3]; }
+      get { return global::NetGameRunning.MainReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -646,15 +838,163 @@ namespace NetGameRunning {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ResJoinRoom(ResJoinRoom other) : this() {
-      playerID_ = other.playerID_;
-      skinID_ = other.skinID_;
-      isSelf_ = other.isSelf_;
+      selfID_ = other.selfID_;
+      team_ = other.team_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ResJoinRoom Clone() {
       return new ResJoinRoom(this);
+    }
+
+    /// <summary>Field number for the "selfID" field.</summary>
+    public const int SelfIDFieldNumber = 1;
+    private int selfID_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int SelfID {
+      get { return selfID_; }
+      set {
+        selfID_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "team" field.</summary>
+    public const int TeamFieldNumber = 2;
+    private static readonly pb::FieldCodec<global::NetGameRunning.PlayerData> _repeated_team_codec
+        = pb::FieldCodec.ForMessage(18, global::NetGameRunning.PlayerData.Parser);
+    private readonly pbc::RepeatedField<global::NetGameRunning.PlayerData> team_ = new pbc::RepeatedField<global::NetGameRunning.PlayerData>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::NetGameRunning.PlayerData> Team {
+      get { return team_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ResJoinRoom);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ResJoinRoom other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (SelfID != other.SelfID) return false;
+      if(!team_.Equals(other.team_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (SelfID != 0) hash ^= SelfID.GetHashCode();
+      hash ^= team_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (SelfID != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(SelfID);
+      }
+      team_.WriteTo(output, _repeated_team_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (SelfID != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(SelfID);
+      }
+      size += team_.CalculateSize(_repeated_team_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ResJoinRoom other) {
+      if (other == null) {
+        return;
+      }
+      if (other.SelfID != 0) {
+        SelfID = other.SelfID;
+      }
+      team_.Add(other.team_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            SelfID = input.ReadInt32();
+            break;
+          }
+          case 18: {
+            team_.AddEntriesFrom(input, _repeated_team_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class PlayerData : pb::IMessage<PlayerData> {
+    private static readonly pb::MessageParser<PlayerData> _parser = new pb::MessageParser<PlayerData>(() => new PlayerData());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<PlayerData> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::NetGameRunning.MainReflection.Descriptor.MessageTypes[5]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public PlayerData() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public PlayerData(PlayerData other) : this() {
+      playerID_ = other.playerID_;
+      skinID_ = other.skinID_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public PlayerData Clone() {
+      return new PlayerData(this);
     }
 
     /// <summary>Field number for the "playerID" field.</summary>
@@ -679,24 +1019,13 @@ namespace NetGameRunning {
       }
     }
 
-    /// <summary>Field number for the "isSelf" field.</summary>
-    public const int IsSelfFieldNumber = 3;
-    private int isSelf_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int IsSelf {
-      get { return isSelf_; }
-      set {
-        isSelf_ = value;
-      }
-    }
-
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as ResJoinRoom);
+      return Equals(other as PlayerData);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ResJoinRoom other) {
+    public bool Equals(PlayerData other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -705,7 +1034,6 @@ namespace NetGameRunning {
       }
       if (PlayerID != other.PlayerID) return false;
       if (SkinID != other.SkinID) return false;
-      if (IsSelf != other.IsSelf) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -714,7 +1042,6 @@ namespace NetGameRunning {
       int hash = 1;
       if (PlayerID != 0) hash ^= PlayerID.GetHashCode();
       if (SkinID != 0) hash ^= SkinID.GetHashCode();
-      if (IsSelf != 0) hash ^= IsSelf.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -736,10 +1063,6 @@ namespace NetGameRunning {
         output.WriteRawTag(16);
         output.WriteInt32(SkinID);
       }
-      if (IsSelf != 0) {
-        output.WriteRawTag(24);
-        output.WriteInt32(IsSelf);
-      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -754,9 +1077,6 @@ namespace NetGameRunning {
       if (SkinID != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(SkinID);
       }
-      if (IsSelf != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(IsSelf);
-      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -764,7 +1084,7 @@ namespace NetGameRunning {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ResJoinRoom other) {
+    public void MergeFrom(PlayerData other) {
       if (other == null) {
         return;
       }
@@ -773,9 +1093,6 @@ namespace NetGameRunning {
       }
       if (other.SkinID != 0) {
         SkinID = other.SkinID;
-      }
-      if (other.IsSelf != 0) {
-        IsSelf = other.IsSelf;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -796,8 +1113,125 @@ namespace NetGameRunning {
             SkinID = input.ReadInt32();
             break;
           }
-          case 24: {
-            IsSelf = input.ReadInt32();
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class SyncRoomPlayersData : pb::IMessage<SyncRoomPlayersData> {
+    private static readonly pb::MessageParser<SyncRoomPlayersData> _parser = new pb::MessageParser<SyncRoomPlayersData>(() => new SyncRoomPlayersData());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<SyncRoomPlayersData> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::NetGameRunning.MainReflection.Descriptor.MessageTypes[6]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SyncRoomPlayersData() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SyncRoomPlayersData(SyncRoomPlayersData other) : this() {
+      team_ = other.team_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SyncRoomPlayersData Clone() {
+      return new SyncRoomPlayersData(this);
+    }
+
+    /// <summary>Field number for the "team" field.</summary>
+    public const int TeamFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::NetGameRunning.PlayerData> _repeated_team_codec
+        = pb::FieldCodec.ForMessage(10, global::NetGameRunning.PlayerData.Parser);
+    private readonly pbc::RepeatedField<global::NetGameRunning.PlayerData> team_ = new pbc::RepeatedField<global::NetGameRunning.PlayerData>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::NetGameRunning.PlayerData> Team {
+      get { return team_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as SyncRoomPlayersData);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(SyncRoomPlayersData other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!team_.Equals(other.team_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= team_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      team_.WriteTo(output, _repeated_team_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += team_.CalculateSize(_repeated_team_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(SyncRoomPlayersData other) {
+      if (other == null) {
+        return;
+      }
+      team_.Add(other.team_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            team_.AddEntriesFrom(input, _repeated_team_codec);
             break;
           }
         }

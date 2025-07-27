@@ -1,26 +1,31 @@
-#define DEBUGMODE
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace GameScripts
 {
+
     public static class AEDebug
     {
-        [Conditional( "DEBUGMODE" )]
-        public static void Log(object msg)
+        [Conditional( "DEBUG" )]
+        [Conditional( "UNITY_EDITOR" )]
+        public static void Log( string msg )
         {
-            Log(msg.ToString());
+#if UNITY_EDITOR
+            UnityEngine.Debug.Log( msg );
+#endif
         }
 
-        [Conditional( "DEBUGMODE" )]
-        public static void Log(string msg)
+        [Conditional("DEBUG")]
+        [Conditional( "UNITY_EDITOR" )]
+        public static void Json( object msg )
         {
-#if DEBUGMODE
-#if SERVER
-            Console.WriteLine(msg);
-#else
-            UnityEngine.Debug.Log(msg);
-#endif
-#endif
+            if ( msg != null )
+            {
+                string text = JsonConvert.SerializeObject( msg );
+                Log( text );
+            }
         }
+
     }
+
 }

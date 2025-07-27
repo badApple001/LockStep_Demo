@@ -1,6 +1,7 @@
 ﻿using AE_ClientNet;
 using AE_NetMessage;
 using AE_ServerNet;
+using Google.Protobuf.Collections;
 using NetGameRunning;
 
 namespace GameServer.Logic.Rooms
@@ -49,17 +50,29 @@ namespace GameServer.Logic.Rooms
 
             int playerId = m_entityIdBase++;
             int skinId = req_msg.data.SkinID;
-            foreach ( var client in socket.serverSocket.clientSockets.Values )
-            {
-                Res_JoinRoom res_msg = new Res_JoinRoom( );
-                res_msg.data.PlayerID = playerId;
-                res_msg.data.SkinID = skinId;
-                res_msg.data.IsSelf = socket == client ? 1 : 0;
-                client.Send( res_msg );
-            }
-            AEDebug.Log( "注册消息" + playerId );
-            m_players.Add( playerId, socket );
             m_IDRecived.Add( playerId, false );
+            m_players.Add( playerId, socket );
+            AEDebug.Log( "注册消息" + playerId );
+
+
+            Res_JoinRoom res_msg = new Res_JoinRoom( );
+            res_msg.data.SelfID = playerId;
+            socket.Send( res_msg );
+            AEDebug.Log( "返回注册成功" + playerId );
+
+
+            //广播消息
+            Msg_SyncRoomPlayerMsg syncRoomPlayerMsg = new Msg_SyncRoomPlayerMsg( );
+            RepeatedField<PlayerData> Team = syncRoomPlayerMsg.data.Team;
+            foreach (var player in m_players )
+            {
+                var data = new PlayerData( );
+                data.PlayerID = player.Key;
+                data.SkinID = player.Value.SkinId;
+                Team.Add( data );
+            }
+            socket.serverSocket.Broadcast( syncRoomPlayerMsg );
+            AEDebug.Log( "广播当前房间内的玩家" );
         }
 
 
@@ -185,7 +198,7 @@ namespace GameServer.Logic.Rooms
         /// <param name="arg2"></param>
         private void ReciveHearMessage( BaseMessage arg1, ClientSocket arg2 )
         {
-            AEDebug.Log( $"心跳消息: from client{arg2.clientID}" );
+            //AEDebug.Log( $"心跳消息: from client{arg2.clientID}" );
         }
 
     }

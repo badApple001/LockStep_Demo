@@ -3,17 +3,26 @@ using AE_ClientNet;
 using AE_NetMessage;
 using NetGameRunning;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
 namespace GameScripts
 {
 
-
+    /// <summary>
+    /// 网络实体
+    /// </summary>
     public interface INetEntity
     {
 
         void OnLogicUpdate( float delta, PlayerInputData playerInput );
+
+        GameObject gameObject { get; }
+
+        BaseVolumnBaseCollider body { get; }
+
+        int NetId { get; set; }
     }
 
     /// <summary>
@@ -65,6 +74,8 @@ namespace GameScripts
             _AEPhysicsMgr = physicsMgr;
             _SyncPrefabs = syncPrefabs;
             NetAsyncMgr.AddNetMessageListener( MessagePool.Res_JoinRoom_ID, Res_JoinRoomMsg );
+            NetAsyncMgr.AddNetMessageListener( MessagePool.Msg_PlayerLeave_ID, Msg_PlayerLeave );
+            NetAsyncMgr.AddNetMessageListener( MessagePool.Msg_SyncRoomPlayerMsg_ID, Msg_SyncRoomPlayers );
         }
 
 
@@ -80,6 +91,8 @@ namespace GameScripts
             _Entitys.Clear( );
 
             NetAsyncMgr.RemoveNetMessageListener( MessagePool.Res_JoinRoom_ID, Res_JoinRoomMsg );
+            NetAsyncMgr.RemoveNetMessageListener( MessagePool.Msg_PlayerLeave_ID, Msg_PlayerLeave );
+            NetAsyncMgr.RemoveNetMessageListener( MessagePool.Msg_SyncRoomPlayerMsg_ID, Msg_SyncRoomPlayers );
         }
 
 
@@ -122,8 +135,55 @@ namespace GameScripts
         private void Res_JoinRoomMsg( BaseMessage msg )
         {
             var message = msg as Res_JoinRoom;
-            if ( message.data.IsSelf == 1 ) SelfNetId = message.data.PlayerID;
-            CreatePlayer( message.data.PlayerID, message.data.SkinID );
+            var players = message.data.Team;
+            SelfNetId = message.data.SelfID;
+        }
+
+        /// <summary>
+        /// 广播房间玩家列表消息
+        /// </summary>
+        /// <param name="msg"></param>
+        private void Msg_SyncRoomPlayers( BaseMessage msg )
+        {
+            AEDebug.Log( "收到广播房间玩家列表消息" );
+            if ( msg is Msg_SyncRoomPlayerMsg message )
+            {
+                //创建玩家
+                var players = message.data.Team.ToList( );
+                for ( int i = 0; i < players.Count; i++ )
+                {
+                    if ( !_Entitys.ContainsKey( players[ i ].PlayerID ) )
+                    {
+                        CreatePlayer( players[ i ].PlayerID, players[ i ].SkinID );
+                    }
+                }
+
+                //移除不存在的玩家
+                List<INetEntity> removeEntitys = new List<INetEntity>( );
+                foreach ( var entity in _Entitys )
+                {
+                    if ( entity.Value is INetPlayer player )
+                    {
+                        if ( players.Find( p => p.PlayerID == player.NetId ) == null )
+                        {
+                            removeEntitys.Add( entity.Value );
+                        }
+                    }
+                }
+                for ( int i = 0; i < removeEntitys.Count; i++ )
+                    DesotryEntity( removeEntitys[ i ] );
+
+                if ( SelfNetId != -1 && _Entitys.TryGetValue( SelfNetId, out var entity1 ) && entity1 is INetPlayer player1 )
+                {
+                    var camNode = player1.gameObject.transform.Find( "CameraNode" );
+                    if ( camNode != null && Camera.main.transform.parent != camNode )
+                    {
+                        Camera.main.transform.parent = camNode;
+                        Camera.main.transform.localEulerAngles = Vector3.zero;
+                        Camera.main.transform.localPosition = Vector3.zero;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -132,10 +192,47 @@ namespace GameScripts
         /// <param name="netId"></param>
         private void CreatePlayer( int netId, int skinId = 0 )
         {
-            var go = InstantiateSyncPrefab( skinId, Vector3.forward * netId + Vector3.up, Quaternion.identity );
-            NetPlayer player = new NetPlayer( go, 30f );
-            _Entitys.Add( netId, player );
             AEDebug.Log( "注册玩家" );
+            var player = CreateEntity<NetPlayer>( netId, skinId, Vector3.forward * netId, Quaternion.identity ) as INetPlayer;
+            player.speed = 30;
+        }
+
+
+        /// <summary>
+        /// 当有玩家离开
+        /// </summary>
+        /// <param name="msg"></param>
+        private void Msg_PlayerLeave( BaseMessage msg )
+        {
+            if ( msg is Msg_PlayerLeave playerLeaveMsg && _Entitys.TryGetValue( playerLeaveMsg.data.PlayerID, out INetEntity entity ) )
+            {
+                DesotryEntity( entity );
+            }
+        }
+
+        /// <summary>
+        /// 创建实体
+        /// </summary>
+        /// <param name="netId"></param>
+        /// <param name="skinID"></param>
+        public INetEntity CreateEntity<T>( int netId, int skinID, Vector3 localPos, Quaternion rotation ) where T : NetEntity, new()
+        {
+            var go = InstantiateSyncPrefab( skinID, localPos, rotation );
+            T entity = new( );
+            entity.Init( go );
+            _Entitys.Add( netId, entity );
+            return entity;
+        }
+
+        /// <summary>
+        /// 销毁NetEntity
+        /// </summary>
+        /// <param name="entity"></param>
+        public void DesotryEntity( INetEntity entity )
+        {
+            _Entitys.Remove( entity.NetId );
+            _AEPhysicsMgr.UnRegisterCollider( entity.body );
+            GameObject.Destroy( entity.gameObject );
         }
 
         /// <summary>

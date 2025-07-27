@@ -5,9 +5,11 @@ package NetGameRunning;
 message PlayerInputData {
   float joyX = 1;
   float joyY = 2;
-  int32 playerID = 3;
-  int32 curFrameIndex = 4;
-  int32 nextFrameIndex = 5;
+  float camX = 3;
+  float camY = 4;
+  int32 playerID = 5;
+  int32 curFrameIndex = 6;
+  int32 nextFrameIndex = 7;
 }
 
 message UpdateMessageData {
@@ -21,9 +23,21 @@ message ReqJoinRoom {
   int32 skinID = 1;
 }
 
+
+message PlayerLeaveData{
+  int32 playerID = 1;
+}
+
 message ResJoinRoom {
+  int32 selfID = 1;
+  repeated PlayerData team = 2; 
+}
+
+message PlayerData{
   int32 playerID = 1;
   int32 skinID = 2;
-  int32 isSelf = 3;
-  repeated ResJoinRoom otherPlayer = 4; 
+}
+
+message SyncRoomPlayersData {
+  repeated PlayerData team = 1;
 }

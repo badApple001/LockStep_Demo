@@ -1,24 +1,20 @@
-using AE_BEPUPhysics_Addition;
-using NetGameRunning;
+﻿using NetGameRunning;
 using UnityEngine;
 
 namespace GameScripts
 {
-    public class NetPlayer : INetEntity
+
+    public interface INetPlayer : INetEntity
     {
-        protected float speed { get; private set; }
-        protected GameObject gameobject { get; private set; }
-        protected BaseVolumnBaseCollider body { get; private set; }
+        float speed { get; set; }
+    }
 
-        public NetPlayer( GameObject gameObject, float velocity )
-        {
-            gameobject = gameObject;
-            body = gameobject.GetComponent<BaseVolumnBaseCollider>( );
-            speed = velocity;
-        }
+    public class NetPlayer : NetEntity, INetPlayer
+    {
+        public float speed { get; set; }
 
 
-        public void OnLogicUpdate( float delta, PlayerInputData playerInput )
+        public override void OnLogicUpdate( float delta, PlayerInputData playerInput )
         {
             MoveUpdate( delta, playerInput );
         }
@@ -33,9 +29,7 @@ namespace GameScripts
             velocity.x = tempVelocity.x;
             velocity.z = tempVelocity.z;
             body.SetVeolicty( velocity );
+            //gameObject.transform.Rotate( Vector3.up * 10 * Time.deltaTime * playerInput.CamX + Vector3.right * 10 * Time.deltaTime * playerInput.CamY );
         }
-
-
     }
-
 }
