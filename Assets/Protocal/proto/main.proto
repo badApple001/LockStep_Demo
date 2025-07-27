@@ -25,4 +25,5 @@ message ResJoinRoom {
   int32 playerID = 1;
   int32 skinID = 2;
   int32 isSelf = 3;
+  repeated ResJoinRoom otherPlayer = 4; 
 }

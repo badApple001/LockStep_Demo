@@ -31,16 +31,12 @@ namespace GameScripts
         }
 
 
-   
+        private AEPhysicsMgr _AEPhysicsMgr;
 
-        private AEPhysicsMgr m_AEPhysicsMgr;
+        [SerializeField] private string _ServerIP;
+        [SerializeField] private int _Port;
+        [SerializeField] private int _SyncRate;
 
-        [SerializeField] private string m_serverIP;
-        [SerializeField] private int m_port;
-
-
-        [SerializeField] private int m_FPS;
-        
         //单位秒 间隔多少上传数据
         private float m_upLoadInterval;
         private float m_timer;
@@ -56,13 +52,13 @@ namespace GameScripts
             var colliders = GameObject.FindObjectsByType<BaseCollider>( FindObjectsSortMode.None );
             AEDebug.Log( $"遍历AE碰撞器: ${colliders.Length}" );
 
-            m_AEPhysicsMgr = new AEPhysicsMgr( new BEPUutilities.Vector3( 0, -20m, 0 ) );
+            _AEPhysicsMgr = new AEPhysicsMgr( new BEPUutilities.Vector3( 0, -20m, 0 ) );
             foreach ( var VARIABLE in colliders )
             {
-                m_AEPhysicsMgr.RegisterCollider( VARIABLE );
+                _AEPhysicsMgr.RegisterCollider( VARIABLE );
             }
 
-            RoomManager.Instance.Setup( m_AEPhysicsMgr, SyncPrefabs );
+            RoomManager.Instance.Setup( _AEPhysicsMgr, SyncPrefabs );
             RoomManager.Instance.NetEntityParent = EntitysParent;
         }
 
@@ -72,13 +68,13 @@ namespace GameScripts
             NetAsyncMgr.ClearNetMessageListener( );
             m_curFrame = -1;
             m_timer = 0;
-            m_upLoadInterval = ( 1f / m_FPS ).ToFix64( ).ToFloat( );
-            
+            m_upLoadInterval = 1f / _SyncRate;
+
             InitScene( );
 
             NetAsyncMgr.AddNetMessageListener( MessagePool.UpdateMessage_ID, ReciveUpdateMessage );
-            NetAsyncMgr.SetMaxMessageFire( m_FPS );
-            NetAsyncMgr.Connect( m_serverIP, m_port );
+            NetAsyncMgr.SetMaxMessageFire( _SyncRate );
+            NetAsyncMgr.Connect( _ServerIP, _Port );
         }
 
 
@@ -94,14 +90,14 @@ namespace GameScripts
             AEDebug.Log( "开始同步" );
             RoomManager.Instance.StartGame( );
         }
-  
+
 
         private void Update( )
         {
             NetAsyncMgr.FireMessage( );
             if ( !NetAsyncMgr.IsConnected ) return;
             if ( m_curFrame == -1 ) return;
-            m_AEPhysicsMgr.UpdatePosition( );
+            _AEPhysicsMgr.UpdatePosition( );
             Upload( Time.deltaTime );
         }
 
@@ -118,7 +114,7 @@ namespace GameScripts
                 m_curFrame = updateDate.CurFrameIndex;
                 m_reciveFromLastUpLoad = true;
                 RoomManager.Instance.OnLogincUpdate( updateDate );
-                m_AEPhysicsMgr.PhysicsUpdate( updateDate.Delta );
+                _AEPhysicsMgr.PhysicsUpdate( updateDate.Delta );
             }
 
             AEDebug.Log( updateDate.Delta );
@@ -160,7 +156,7 @@ namespace GameScripts
             AEDebug.Log( "上传第" + playerInput.CurFrameIndex + "帧的数据" + playerInput.JoyX + "..." + playerInput.JoyY );
         }
 
-      
+
 
     }
 

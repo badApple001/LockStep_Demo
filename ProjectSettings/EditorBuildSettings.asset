@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/LockStep_Demo 1.unity
-    guid: ec3bce0902e457c41844e8274d3ce7d9
+    path: Assets/GameMain/Scenes/Game.unity
+    guid: fcdd2b7de854d9d439eccee09dd07a99
   m_configObjects: {}

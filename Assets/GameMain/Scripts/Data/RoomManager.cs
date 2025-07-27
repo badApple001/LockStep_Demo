@@ -26,7 +26,7 @@ namespace GameScripts
         /// 唯一单例
         /// </summary>
         public static RoomManager Instance { private set; get; } = new RoomManager( );
-        
+
         /// <summary>
         /// 玩家自己的NetId
         /// </summary>
@@ -76,7 +76,7 @@ namespace GameScripts
             SelfNetId = -1;
             NetEntityParent = null;
             _AEPhysicsMgr = null;
-            _SyncPrefabs.Clear( );
+            _SyncPrefabs?.Clear( );
             _Entitys.Clear( );
 
             NetAsyncMgr.RemoveNetMessageListener( MessagePool.Res_JoinRoom_ID, Res_JoinRoomMsg );
@@ -132,7 +132,7 @@ namespace GameScripts
         /// <param name="netId"></param>
         private void CreatePlayer( int netId, int skinId = 0 )
         {
-            var go = InstantiateSyncPrefab( skinId );
+            var go = InstantiateSyncPrefab( skinId, Vector3.forward * netId + Vector3.up, Quaternion.identity );
             NetPlayer player = new NetPlayer( go, 30f );
             _Entitys.Add( netId, player );
             AEDebug.Log( "注册玩家" );
@@ -142,8 +142,10 @@ namespace GameScripts
         /// 实例化同步客户端预设体
         /// </summary>
         /// <param name="prefabId"></param>
+        /// <param name="realativePos"></param>
+        /// <param name="rotation"></param>
         /// <returns></returns>
-        private GameObject InstantiateSyncPrefab( int prefabId )
+        private GameObject InstantiateSyncPrefab( int prefabId, Vector3 realativePos, Quaternion rotation )
         {
             if ( prefabId < 0 || prefabId >= _SyncPrefabs.Count )
             {
@@ -161,6 +163,8 @@ namespace GameScripts
                 ret = GameObject.Instantiate( _SyncPrefabs[ prefabId ] );
             }
 
+            ret.transform.localPosition = realativePos;
+            ret.transform.localRotation = rotation;
             if ( null != ret && ret.TryGetComponent<BaseVolumnBaseCollider>( out var collider ) )
             {
                 _AEPhysicsMgr.RegisterCollider( collider );

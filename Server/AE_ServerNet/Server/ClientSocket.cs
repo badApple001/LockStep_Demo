@@ -14,6 +14,7 @@ namespace AE_ServerNet
 
         private static int CLIENT_BEGIN_ID = 1;
 
+
         static ClientSocket()
         {
             InitLister();
