@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 9b0f5eb04fb771d49985df7f75f0cda0
 ModelImporter:
-  serializedVersion: 19300
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
@@ -20,6 +20,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: <Root Transform>
     rigImportErrors: 
     rigImportWarnings: 
@@ -49,7 +50,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -240,20 +241,27 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
@@ -743,14 +751,12 @@ ModelImporter:
     - name: ik_foot_l
       parentName: ik_foot_root
       position: {x: -0.13452552, y: 0.063700184, z: -0.096498564}
-      rotation: {x: 0.0000000023586897, y: -0.00000005960464, z: -0.0000000018626456,
-        w: 1}
+      rotation: {x: 0.0000000023586897, y: -0.00000005960464, z: -0.0000000018626456, w: 1}
       scale: {x: 0.9999999, y: 1.0000001, z: 1}
     - name: ik_foot_r
       parentName: ik_foot_root
       position: {x: 0.13488804, y: 0.06370018, z: -0.09649785}
-      rotation: {x: 0.0000000023586897, y: -0.00000005960464, z: -0.0000000018626456,
-        w: 1}
+      rotation: {x: 0.0000000023586897, y: -0.00000005960464, z: -0.0000000018626456, w: 1}
       scale: {x: 0.9999999, y: 1.0000001, z: 1}
     - name: ik_hand_root
       parentName: root
@@ -1144,12 +1150,13 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 91e2d70433eac2e418ec0ecb58a4f7d6,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 91e2d70433eac2e418ec0ecb58a4f7d6, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 2
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
