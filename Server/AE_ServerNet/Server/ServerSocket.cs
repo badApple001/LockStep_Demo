@@ -22,12 +22,15 @@ namespace AE_ServerNet
         /// <param name="ip"></param>
         /// <param name="port"></param>
         /// <param name="num"></param>
-        public void Start(string ip, int port, int num)
+        public void Start(int port, int num)
         {
-            this.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
+            //this.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this.socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
+            IPEndPoint ipEndPoint = new IPEndPoint( IPAddress.IPv6Any, port);
             try
             {
+                // 允许同时接受 IPv4 和 IPv6（可选）
+                socket.SetSocketOption( SocketOptionLevel.IPv6, SocketOptionName.IPv6Only, false );
                 socket.Bind(ipEndPoint);
                 socket.Listen(num);
                 this.socket.BeginAccept(Accept, this.socket);

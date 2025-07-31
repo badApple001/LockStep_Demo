@@ -5,7 +5,6 @@ namespace AE_ServerNet
 {
     internal class Program
     {
-        static readonly string ServerIp = "0.0.0.0";
         static readonly int LocalPoint = 8080;
         public static ServerSocket socket;
 
@@ -13,7 +12,7 @@ namespace AE_ServerNet
         {
 
             socket = new ServerSocket( );
-            socket.Start( ServerIp, LocalPoint, 1024 );
+            socket.Start( LocalPoint, 1024 );
             AEDebug.Log( "服务器开启成功" );
 
 

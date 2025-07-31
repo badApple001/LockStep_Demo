@@ -1,20 +1,39 @@
-﻿using NetGameRunning;
+﻿using AE_BEPUPhysics_Addition;
+using NetGameRunning;
 using UnityEngine;
 
 namespace GameScripts
 {
 
-    public interface INetPlayer : INetEntity
+    public interface INetPlayer 
     {
-        float speed { get; set; }
+        int playerId { get; set; }  
+        float velocity { get; set; }
+        GameObject gameObject { get; }
+        BaseVolumnBaseCollider body { get; }
+
+        void Init( GameObject gameObject );
+        void OnLogicUpdate( float delta, PlayerInputData playerInput );
     }
 
-    public class NetPlayer : NetEntity, INetPlayer
+    public class NetPlayer : INetPlayer
     {
-        public float speed { get; set; }
+        public float velocity { get; set; }
+        public int playerId { get; set; }
+        public GameObject gameObject { get; private set; }
+        public BaseVolumnBaseCollider body { get; private set; }
+
+        public virtual void Init( GameObject gameObject )
+        {
+            this.gameObject = gameObject;
+            body = this.gameObject.GetComponent<BaseVolumnBaseCollider>( );
+            OnInit( );
+        }
+
+        public virtual void OnInit( ) { }
 
 
-        public override void OnLogicUpdate( float delta, PlayerInputData playerInput )
+        public virtual void OnLogicUpdate( float delta, PlayerInputData playerInput )
         {
             MoveUpdate( delta, playerInput );
         }
@@ -23,7 +42,7 @@ namespace GameScripts
         protected virtual void MoveUpdate( float delta, PlayerInputData playerInput )
         {
             var direction = new Vector3( playerInput.JoyX, 0, playerInput.JoyY );
-            var tempVelocity = direction * speed;
+            var tempVelocity = direction * this.velocity;
 
             var velocity = body.GetVelocity( );
             velocity.x = tempVelocity.x;

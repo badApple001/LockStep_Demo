@@ -189,7 +189,8 @@ namespace AE_ClientNet
             if (IsConnected) return;
 
             IPEndPoint SeveriPEndPoint = new IPEndPoint(IPAddress.Parse(host), port);
-            m_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //m_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            m_socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
 
             SocketAsyncEventArgs argsConnect = new SocketAsyncEventArgs();
             argsConnect.RemoteEndPoint = SeveriPEndPoint;

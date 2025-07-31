@@ -108,16 +108,27 @@ namespace GameScripts
         private void ReciveUpdateMessage( BaseMessage msg )
         {
             var updateMessage = msg as UpdateMessage;
-            var updateDate = updateMessage.data;
-            if ( updateDate.CurFrameIndex == m_curFrame + 1 )
+            var updateData = updateMessage.data;
+            if ( updateData.CurFrameIndex == m_curFrame + 1 )
             {
-                m_curFrame = updateDate.CurFrameIndex;
+                m_curFrame = updateData.CurFrameIndex;
                 m_reciveFromLastUpLoad = true;
-                RoomManager.Instance.OnLogincUpdate( updateDate );
-                _AEPhysicsMgr.PhysicsUpdate( updateDate.Delta );
+               
+                
+                //更新玩家
+                RoomManager.Instance.OnLogincUpdate( updateData );
+                
+                //更新子弹
+
+
+                //怪物更新
+                //MonsterManager.Instance.OnLogincUpdate( updateData );
+               
+
+                _AEPhysicsMgr.PhysicsUpdate( updateData.Delta );
             }
 
-            AEDebug.Log( "接收到第:" + updateDate.CurFrameIndex + "帧数据  " + updateDate.Delta.ToString( ) );
+            AEDebug.Log( "接收到第:" + updateData.CurFrameIndex + "帧数据  " + updateData.Delta.ToString( ) );
         }
 
         /// <summary>

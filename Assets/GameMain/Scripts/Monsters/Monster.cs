@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using NetGameRunning;
 
 namespace GameScripts
 {
-    public interface IMonster : INetEntity
+    public interface IMonster 
     {
 
         int Hp { get; set; }
@@ -13,6 +11,7 @@ namespace GameScripts
         float MoveSpeed { get; set; }
         float AttackSpeed { get; set; }
         MonsterState State { get; set; }
+        void OnLogicUpdate( UpdateMessageData frameData );
     }
 
 
@@ -21,8 +20,6 @@ namespace GameScripts
         Idle,
         Move,
         Attack,
-
-
 
 
         Die,
@@ -37,7 +34,7 @@ namespace GameScripts
     /// ÑªÌõ£¬ ÒÆ¶¯£¬ ¹¥»÷ ÉËº¦
     /// 
     /// </summary>
-    public class Monster : NetEntity, IMonster
+    public class Monster : IMonster
     {
         public int Hp { get => throw new System.NotImplementedException( ); set => throw new System.NotImplementedException( ); }
         public int Atk { get => throw new System.NotImplementedException( ); set => throw new System.NotImplementedException( ); }
@@ -45,6 +42,11 @@ namespace GameScripts
         public float MoveSpeed { get => throw new System.NotImplementedException( ); set => throw new System.NotImplementedException( ); }
         public float AttackSpeed { get => throw new System.NotImplementedException( ); set => throw new System.NotImplementedException( ); }
         public MonsterState State { get => throw new System.NotImplementedException( ); set => throw new System.NotImplementedException( ); }
+
+        public void OnLogicUpdate( UpdateMessageData frameData )
+        {
+            throw new System.NotImplementedException( );
+        }
     }
 
 }

@@ -4657,6 +4657,10 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1661065674406982537, guid: fa9f66f4a234ce748b4582e426649f9d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661065674406982537, guid: fa9f66f4a234ce748b4582e426649f9d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -7687,6 +7691,10 @@ PrefabInstance:
     - target: {fileID: 2664223108316658743, guid: fa9f66f4a234ce748b4582e426649f9d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2822989194341218333, guid: fa9f66f4a234ce748b4582e426649f9d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2822989194341218333, guid: fa9f66f4a234ce748b4582e426649f9d, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -13023,6 +13031,10 @@ PrefabInstance:
     - target: {fileID: 8057354540065536821, guid: fa9f66f4a234ce748b4582e426649f9d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8084077744902962262, guid: fa9f66f4a234ce748b4582e426649f9d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8084077744902962262, guid: fa9f66f4a234ce748b4582e426649f9d, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -19693,7 +19705,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1502030604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21210,54 +21222,6 @@ MonoBehaviour:
       z: 0
   m_height: 2
   m_radius: 0.5
---- !u!1 &1855311195
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1855311196}
-  - component: {fileID: 1855311197}
-  m_Layer: 0
-  m_Name: MonsterManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1855311196
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1855311195}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1855311197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1855311195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85cc623be603d8441aaf0d97e41711c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MonsterSpawnPoint: {fileID: 1546715857}
-  EntityRoot: {fileID: 2136987357}
-  MonsterPrefab: {fileID: 393171539704299421, guid: 6881553b9210cfc40960aae9cb9d137b, type: 3}
-  MonsterDestination: {fileID: 413626604}
 --- !u!1 &1905263624
 GameObject:
   m_ObjectHideFlags: 0
